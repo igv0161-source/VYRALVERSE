@@ -28,7 +28,7 @@ try {
   await page.locator('input[name="a"][value="curiosity"]').check();
   await page.locator('input[name="b"][value="logic"]').check();
   await page.locator('input[name="c"][value="heart"]').check();
-  await page.locator('#mindForm button[type="submit"]').click();
+  await page.locator('#mindForm button.play-button').click();
   await page.locator('#mindResult').getByText('THE FRONTIER SOUL').waitFor();
   await page.locator('#dismiss').click();
 
