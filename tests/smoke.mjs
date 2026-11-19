@@ -46,6 +46,7 @@ try {
   await page.locator('#commandSearch').fill('GODSEYE');
   await page.locator('.command-item').first().click();
   assert.equal(await page.locator('#discover').evaluate(el => el.open), true, 'Command deck should open the Discover section before navigating');
+  await page.waitForFunction(() => document.getElementById('godseyeStatus')?.textContent !== 'CONNECTING TO PUBLIC DATA', null, { timeout: 10000 });
 
   await page.goto('http://127.0.0.1:4173/nexus-visual-builder.html', { waitUntil: 'domcontentloaded' });
   await page.locator('#canvas .canvas-section').first().waitFor();
