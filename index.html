@@ -141,7 +141,7 @@ try{
  const level=Math.floor(data.xp/100)+1,rank=level>=10?"COSMIC CARTOGRAPHER":level>=5?"REALITY RANGER":level>=3?"GATEKEEPER":"NEW ARRIVAL";
  function render(){
   const lv=Math.floor(data.xp/100)+1,progress=data.xp%100;
-  document.querySelector("#explorerName").textContent="WANDERER-"+(Math.abs([...JSON.stringify(data.visits)].reduce((a,c)=>a+c.charCodeAt(0),1731)%9000+1000);
+  document.querySelector("#explorerName").textContent="WANDERER-"+(Math.abs([...JSON.stringify(data.visits)].reduce((a,c)=>a+c.charCodeAt(0),1731)%9000+1000));
   document.querySelector("#explorerRank").textContent="RANK "+String(lv).padStart(2,"0")+" · "+(lv>=10?"COSMIC CARTOGRAPHER":lv>=5?"REALITY RANGER":lv>=3?"GATEKEEPER":"NEW ARRIVAL");
   document.querySelector("#levelLabel").textContent="LEVEL "+lv;document.querySelector("#xpLabel").textContent=progress+" / 100 XP";document.querySelector("#levelFill").style.width=progress+"%";
   document.querySelector("#statXP").textContent=data.xp;document.querySelector("#statPortals").textContent=data.visits.length;document.querySelector("#statDays").textContent=data.solved.length;
