@@ -139,10 +139,24 @@ body.verse-entered .corner,body.verse-entered .bottomhud{display:flex}
 .level-titleline{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:4px 0 12px}.level-titleline b{font:10px 'DM Mono';letter-spacing:.12em;color:#e4faff}.level-titleline span{font:8px 'DM Mono';letter-spacing:.1em;color:#8e9bb2;text-align:right}
 .level-constellation{display:flex;align-items:center;justify-content:space-between;gap:5px;margin:19px 0 8px}.level-constellation span{width:25px;height:25px;flex:0 0 25px;display:grid;place-items:center;border:1px solid #ffffff30;border-radius:50%;font:8px 'DM Mono';color:#7888a3;background:#080d1c;transition:.35s}.level-constellation span.reached{border-color:#8df2ff;color:#07121b;background:#8df2ff;box-shadow:0 0 15px #8df2ff88}.level-constellation i{height:1px;flex:1;background:linear-gradient(90deg,#8df2ff55,#ffffff18)}.level-reward{min-height:22px;margin:9px 0 0;color:#a9baff;font:8px 'DM Mono';letter-spacing:.1em}
 @keyframes levelOrbit{to{rotate:360deg}}@keyframes sparkFloat{50%{translate:0 -8px;opacity:.55}}@media(max-width:760px){.level-visual{height:165px}.level-constellation span{width:22px;height:22px;flex-basis:22px;font-size:7px}.level-titleline b{font-size:9px}.level-titleline span{font-size:7px}}@media(prefers-reduced-motion:reduce){.level-orbit,.level-spark{animation:none}}
+
+/* THE EVENT HORIZON — cinematic universe entry */
+.entry-warp{position:fixed;inset:0;z-index:100;display:grid;place-items:center;overflow:hidden;pointer-events:none;opacity:0;visibility:hidden;background:radial-gradient(circle at center,#10264b 0,#050916 38%,#010208 100%);transition:opacity .35s,visibility .35s}.entry-warp.active{opacity:1;visibility:visible}
+.warp-grid{position:absolute;inset:-50%;opacity:0;background:linear-gradient(#83eaff19 1px,transparent 1px),linear-gradient(90deg,#83eaff19 1px,transparent 1px);background-size:46px 46px;transform:perspective(360px) rotateX(64deg) scale(1.7);mask-image:radial-gradient(ellipse,#000 12%,transparent 65%)}.entry-warp.active .warp-grid{animation:gridRush 1.8s ease-in forwards}
+.warp-ring{position:absolute;width:min(75vw,560px);aspect-ratio:1;border:1px solid #9df5ff99;border-radius:50%;box-shadow:0 0 30px #70eaff25,inset 0 0 35px #70eaff16;opacity:0}.ring-one{transform:scale(.08) rotateX(65deg)}.ring-two{width:min(105vw,780px);border-color:#b7a1ff77;transform:scale(.08) rotateY(68deg)}.ring-three{width:min(130vw,980px);border-color:#e9d29b55;transform:scale(.08) rotateX(75deg)}
+.entry-warp.active .ring-one{animation:ringExpand 1.55s cubic-bezier(.12,.7,.2,1) forwards}.entry-warp.active .ring-two{animation:ringExpand 1.75s .08s cubic-bezier(.12,.7,.2,1) forwards}.entry-warp.active .ring-three{animation:ringExpand 1.95s .16s cubic-bezier(.12,.7,.2,1) forwards}
+.warp-core{z-index:2;display:flex;flex-direction:column;align-items:center;gap:13px;text-align:center;opacity:0;transform:scale(.65);text-shadow:0 0 22px #8df2ff80}.warp-core span{font:10px 'DM Mono';letter-spacing:.55em;color:#9df5ff}.warp-core b{font-size:clamp(25px,6vw,56px);letter-spacing:-.06em;color:white}.warp-core small{font:9px 'DM Mono';letter-spacing:.24em;color:#b7a1ff}.entry-warp.active .warp-core{animation:coreReveal 1.55s .15s ease forwards}
+.warp-flash{position:absolute;inset:0;background:#eaffff;opacity:0}.entry-warp.active .warp-flash{animation:warpFlash 1.65s ease-out forwards}
+body.gateway-crossing #universe{filter:brightness(1.8) saturate(1.4);transform:scale(1.035);transition:filter .5s,transform 1.4s}body.gateway-crossing .hero-copy{filter:blur(5px);transform:scale(.96);opacity:0;transition:all .45s}
+#enterVerseHero{position:relative;isolation:isolate;overflow:hidden}#enterVerseHero:before{content:"";position:absolute;inset:-80% -30%;z-index:-1;background:linear-gradient(110deg,transparent 35%,#ffffffb8 50%,transparent 65%);transform:translateX(-100%) rotate(12deg)}#enterVerseHero:hover:before{animation:buttonSweep .8s ease}#enterVerseHero:after{content:"";position:absolute;inset:-8px;border:1px solid #a8f5ff70;opacity:0;transform:scale(.92);pointer-events:none}#enterVerseHero:hover:after{animation:buttonPulse 1.2s ease-out infinite}
+#enterVerse,#enterVerseHero{transition:transform .25s,box-shadow .25s,filter .25s}#enterVerse:active,#enterVerseHero:active{transform:scale(.96)}
+@keyframes gridRush{0%{opacity:0;transform:perspective(360px) rotateX(64deg) scale(.5)}25%{opacity:.75}100%{opacity:.25;transform:perspective(360px) rotateX(64deg) scale(2.7) translateY(8%)}}
+@keyframes ringExpand{0%{opacity:0;scale:.08}18%{opacity:1}100%{opacity:0;scale:2.5}}@keyframes coreReveal{0%{opacity:0;transform:scale(.65);letter-spacing:.3em}30%,72%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.25)}}@keyframes warpFlash{0%,68%{opacity:0}78%{opacity:.85}100%{opacity:0}}@keyframes buttonSweep{to{transform:translateX(100%) rotate(12deg)}}@keyframes buttonPulse{0%{opacity:.8;transform:scale(.92)}100%{opacity:0;transform:scale(1.12)}}
+@media(prefers-reduced-motion:reduce){.entry-warp,.entry-warp *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
 <body class="verse-locked">
-<div id="fallback" aria-hidden="true"></div><canvas id="universe" aria-label="A cinematic interactive 3D universe"></canvas><div class="vignette"></div>
+<div id="fallback" aria-hidden="true"></div><canvas id="universe" aria-label="A cinematic interactive 3D universe"></canvas><div class="vignette"></div><div class="entry-warp" id="entryWarp" aria-hidden="true"><div class="warp-grid"></div><div class="warp-ring ring-one"></div><div class="warp-ring ring-two"></div><div class="warp-ring ring-three"></div><div class="warp-core"><span>VYRALVERSE</span><b>GATEWAY OPEN</b><small>REALITY IS RECONFIGURING</small></div><div class="warp-flash"></div></div>
 <header><div class="logo">VYRAL<b>VERSE</b></div><div class="navmeta">THE INTERNET'S PLAYGROUND&nbsp; / &nbsp;001</div><button class="navbutton" id="enterVerse" type="button">ENTER THE UNIVERSE ↗</button><button class="navbutton" id="accountButton" type="button">SIGN IN ↗</button></header>
 <main>
 <section class="hero"><div class="hero-copy"><div class="eyebrow">✦ &nbsp; THE INTERNET’S PLAYGROUND</div><h1>ENTER THE<br><span>UNKNOWN.</span></h1><p>A universe of hidden worlds, strange challenges and unexpected discoveries is waiting beyond this gate.</p><div class="actions"><button class="btn btn-primary" id="enterVerseHero" type="button">ENTER THE UNIVERSE&nbsp; ↗</button></div><div class="gesture"><span>✧</span> FOLLOW THE LIGHT · TRUST YOUR CURIOSITY</div></div></section>
@@ -462,15 +476,22 @@ render();
 })();</script><script>
 (()=> {
  const enterButtons=[document.getElementById('enterVerse'),document.getElementById('enterVerseHero')].filter(Boolean);
- let entered=false;
+ const warp=document.getElementById('entryWarp');let entered=false;
  function enterUniverse(){
-   if(entered)return; entered=true;
-   document.body.classList.remove('verse-locked');
-   document.body.classList.add('verse-entered');
-   try{sessionStorage.setItem('vv-universe-entered','1')}catch(e){}
-   const hub=document.getElementById('portals');
-   if(hub)setTimeout(()=>hub.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'}),90);
-   if(navigator.vibrate)navigator.vibrate(16);
+   if(entered)return;entered=true;
+   enterButtons.forEach(b=>{b.disabled=true;b.setAttribute('aria-busy','true')});
+   document.body.classList.add('gateway-crossing');
+   if(warp){warp.classList.add('active');warp.setAttribute('aria-hidden','false')}
+   if(navigator.vibrate)navigator.vibrate([18,35,42]);
+   const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+   const reveal=()=>{
+     document.body.classList.remove('verse-locked','gateway-crossing');document.body.classList.add('verse-entered');
+     try{sessionStorage.setItem('vv-universe-entered','1')}catch(e){}
+     const hub=document.getElementById('portals');if(hub)hub.scrollIntoView({behavior:reduced?'auto':'smooth',block:'start'});
+     if(warp){warp.classList.remove('active');warp.setAttribute('aria-hidden','true')}
+     enterButtons.forEach(b=>{b.disabled=false;b.removeAttribute('aria-busy')});
+   };
+   window.setTimeout(reveal,reduced?80:1450);
  }
  enterButtons.forEach(b=>b.addEventListener('click',enterUniverse));
 })();
