@@ -193,6 +193,35 @@ body.gateway-crossing #enterVerseHero{animation:none;filter:brightness(1.5)}
 @media(max-width:760px){.hero-rift{width:88vw;right:-34vw;top:48%;opacity:.5}.hero-copy{max-width:92%;}.rift-label{display:none}}
 @media(prefers-reduced-motion:reduce){.hero-rift *,.hero-rift:before,.hero-rift:after{animation:none!important}}
 
+
+/* VYRALVERSE COLOUR GRADE + MOTION PASS — native CSS, zero generation credits */
+:root{--bg:#03050b;--ice:#9cefff;--violet:#a99aff;--gold:#e7c98c;--muted:#b8c2d5}
+body{background:#03050b;color:#f5f7ff}
+#fallback{background:radial-gradient(ellipse at 72% 44%,#172c49 0,#0a1022 34%,#03050b 76%)}
+#fallback:before{background:radial-gradient(circle at 32% 28%,#c0f8ff 0,#397e9c 8%,#17294b 34%,#0a1020 58%,#03050b 69%);box-shadow:inset -42px -22px 82px #010208,0 0 52px #70e8ff66,0 0 145px #9075ff40}
+#fallback:after{border-color:#a4f1ff70;box-shadow:0 0 30px #8ceaff44,0 0 0 22px #8ceaff0b,0 0 0 70px #c2a8ff0b}
+.vignette{background:radial-gradient(ellipse at 66% 48%,transparent 4%,#02040b30 48%,#02040bd9 100%),linear-gradient(90deg,#02040bf5 0%,#02040bc2 33%,transparent 76%),linear-gradient(0deg,#02040b 0%,transparent 26%,transparent 80%,#02040bb8 100%)}
+.hero-rift{filter:saturate(1.18) contrast(1.08) drop-shadow(0 0 68px #55dffb30)}
+.hero-rift:before{border-color:#b6f5ff77;box-shadow:0 0 36px #65eaff2b,inset 0 0 45px #8a7cff24}
+.hero-rift:after{border-color:#d5c7ff90;box-shadow:0 0 65px #8c76ff35,inset 0 0 52px #67eaff2a}
+.rift-core{background:radial-gradient(ellipse at 50% 50%,#f1ffff 0%,#91f4ff 3%,#7ba5ff 10%,#7053c5 22%,#111a32 48%,#03050b 70%);box-shadow:0 0 26px #b6f7ffb5,0 0 105px #806cff78,0 0 190px #3ccfff30}
+.rift-orbit{border-color:#b1f4ff55}
+.rift-orbit.orbit-two{border-color:#cbbaff70}
+.rift-orbit.orbit-three{border-color:#ead4a966}
+.rift-node{box-shadow:0 0 13px 5px #74eaffaa,0 0 34px #74eaffaa}
+header{background:#03050b70;border-bottom-color:#b8eaff1c}
+.navbutton{border-color:#9cefff88;background:linear-gradient(120deg,#8df2ff16,#b59aff14);box-shadow:inset 0 0 18px #8df2ff08,0 0 22px #65eaff0b}
+.hero h1 span{background-image:linear-gradient(105deg,#ffffff 0%,#a7f2ff 38%,#c4b5ff 72%,#f0d9a9 100%)}
+.btn-primary{background:linear-gradient(110deg,#a6f4ff 0%,#b8b0ff 62%,#e8d09a 100%);box-shadow:0 0 42px #73eaff55,0 0 90px #947cff20}
+.portal{border-color:#b4d8ff20;background:linear-gradient(145deg,#121b2aaf,#080c18d9 62%,#111024b8)}
+.portal:hover{border-color:color-mix(in srgb,var(--glow) 72%,white);box-shadow:0 18px 60px #0009,0 0 34px color-mix(in srgb,var(--glow) 23%,transparent)}
+@keyframes grade-drift{0%,100%{filter:hue-rotate(-5deg) saturate(1.08)}50%{filter:hue-rotate(7deg) saturate(1.22)}}
+@keyframes star-bloom{0%,100%{opacity:.5;transform:scale(.985)}50%{opacity:1;transform:scale(1.025)}}
+.hero-rift{animation:grade-drift 18s ease-in-out infinite}
+.rift-core{animation:rift-core 8s ease-in-out infinite,star-bloom 5.5s ease-in-out infinite}
+@media(max-width:760px){.hero-rift{opacity:.58;filter:saturate(1.15) contrast(1.06) drop-shadow(0 0 45px #55dffb25)}}
+@media(prefers-reduced-motion:reduce){.hero-rift,.rift-core{animation:none!important}}
+
 </style>
 </head>
 <body class="verse-locked">
