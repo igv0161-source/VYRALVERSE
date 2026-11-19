@@ -427,7 +427,7 @@ const actions=[
 ['Explorer Journal','XP, achievements and discoveries','✦',()=>jump('#explorer')],
 ['Global Leaderboard','Explore the shared ranking','↗',()=>jump('#leaderboard')],
 ['My Explorer Identity','Open your cosmic identity','◎',()=>{close();document.getElementById('accountButton')?.click()}],
-['Surprise Me','Open a random portal','✺',()=>{close();document.getElementById('surprise')?.click()}]
+['Surprise Me','Discover an unexpected portal','✺',()=>{close();const p=[...document.querySelectorAll('.portal[data-title]')];p[Math.floor(Math.random()*p.length)]?.click()}]
 ];
 let active=0,filtered=actions;
 function open(){overlay.classList.add('open');input.value='';active=0;render();setTimeout(()=>input.focus(),20)}
