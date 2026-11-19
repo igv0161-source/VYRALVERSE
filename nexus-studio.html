@@ -65,7 +65,7 @@ function download(name,content,type){const blob=new Blob([content],{type}),url=U
 document.querySelectorAll('[data-file]').forEach(el=>el.addEventListener('click',()=>setFile(el.dataset.file)));
 Object.values(files).forEach(el=>{el.addEventListener('input',markDirty);el.addEventListener('click',updateCursor);el.addEventListener('keyup',updateCursor);el.addEventListener('keydown',e=>{if(e.key==='Tab'){e.preventDefault();const a=el.selectionStart,b=el.selectionEnd;el.setRangeText('  ',a,b,'end');markDirty();updateCursor()}})});
 $('#run').addEventListener('click',run);$('#save').addEventListener('click',save);$('#reset').addEventListener('click',()=>{if(confirm('Reset this workspace to the starter project?')){Object.keys(files).forEach(k=>files[k].value=starter[k]);markDirty();run()}});
-$('#openPreview').addEventListener('click',()=>download('nexus-preview.html',build(),'text/html'));
+$('#openPreview').addEventListener('click',()=>{const url=URL.createObjectURL(new Blob([build()],{type:'text/html'}));window.open(url,'_blank','noopener');setTimeout(()=>URL.revokeObjectURL(url),60000)});
 $('#clearConsole').addEventListener('click',()=>$('#consoleLines').replaceChildren());
 document.querySelectorAll('[data-size]').forEach(b=>b.addEventListener('click',()=>{$('#preview').style.maxWidth=b.dataset.size==='mobile'?'390px':'none';$('#preview').style.margin='0 auto';}));
 document.querySelectorAll('[data-template]').forEach(b=>b.addEventListener('click',()=>loadTemplate(b.dataset.template)));
