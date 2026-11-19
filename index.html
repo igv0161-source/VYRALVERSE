@@ -153,13 +153,30 @@ body.gateway-crossing #universe{filter:brightness(1.8) saturate(1.4);transform:s
 @keyframes gridRush{0%{opacity:0;transform:perspective(360px) rotateX(64deg) scale(.5)}25%{opacity:.75}100%{opacity:.25;transform:perspective(360px) rotateX(64deg) scale(2.7) translateY(8%)}}
 @keyframes ringExpand{0%{opacity:0;scale:.08}18%{opacity:1}100%{opacity:0;scale:2.5}}@keyframes coreReveal{0%{opacity:0;transform:scale(.65);letter-spacing:.3em}30%,72%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.25)}}@keyframes warpFlash{0%,68%{opacity:0}78%{opacity:.85}100%{opacity:0}}@keyframes buttonSweep{to{transform:translateX(100%) rotate(12deg)}}@keyframes buttonPulse{0%{opacity:.8;transform:scale(.92)}100%{opacity:0;transform:scale(1.12)}}
 @media(prefers-reduced-motion:reduce){.entry-warp,.entry-warp *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+/* GATEWAY POLISH — clearer CTA, touch feedback and complete transition timing */
+body.verse-locked #enterVerse{position:relative;display:inline-flex;align-items:center;gap:12px;overflow:hidden;padding:12px 15px;border-color:#8df2ff8c;background:linear-gradient(110deg,#8df2ff18,#a88cff14);box-shadow:0 0 22px #6eeaff18,inset 0 0 18px #8df2ff08}
+body.verse-locked #enterVerse .gate-arrow,body.verse-locked #enterVerseHero .gate-arrow{display:inline-grid;place-items:center;transition:transform .3s;text-shadow:0 0 12px #8df2ff}
+body.verse-locked #enterVerseHero{display:inline-flex;align-items:center;justify-content:center;gap:17px;min-width:min(290px,100%);position:relative;isolation:isolate;overflow:visible;animation:gateBreath 3.8s ease-in-out infinite}
+body.verse-locked #enterVerseHero:before{content:"";position:absolute;inset:-7px;border:1px solid #8df2ff55;opacity:.5;pointer-events:none;transform:scale(1);z-index:-1;animation:gateHalo 3.8s ease-in-out infinite}
+body.verse-locked #enterVerseHero:after{content:"";position:absolute;right:18px;top:50%;width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 9px 4px #8df2ff,0 0 25px 9px #8df2ff77;transform:translateY(-50%);pointer-events:none;opacity:.9}
+body.verse-locked #enterVerseHero:hover .gate-arrow,body.verse-locked #enterVerse:hover .gate-arrow{transform:translate(4px,-2px)}
+body.verse-locked #enterVerseHero:active,body.verse-locked #enterVerse:active{transform:scale(.97);filter:brightness(1.2)}
+body.verse-locked #enterVerse:focus-visible,body.verse-locked #enterVerseHero:focus-visible{outline:2px solid #e8cb91;outline-offset:5px}
+body.gateway-crossing #gateStatus{color:#c9faff;text-shadow:0 0 16px #8df2ff;letter-spacing:.2em}
+body.gateway-crossing #enterVerseHero{animation:none;filter:brightness(1.5)}
+.entry-warp.active .warp-flash{animation:warpFlash 1.65s ease-out forwards}
+@keyframes gateBreath{0%,100%{box-shadow:0 0 28px #73eaff35,0 0 0 0 #8df2ff00}50%{box-shadow:0 0 42px #73eaff66,0 0 28px 2px #8df2ff18}}
+@keyframes gateHalo{0%,100%{opacity:.2;transform:scale(.99)}50%{opacity:.85;transform:scale(1.025)}}
+@media(max-width:600px){body.verse-locked #enterVerse{padding:10px 11px;font-size:8px;gap:8px}body.verse-locked #enterVerseHero{width:100%;min-height:62px;justify-content:space-between;padding:0 23px;font-size:10px}}
+@media(prefers-reduced-motion:reduce){body.verse-locked #enterVerseHero{animation:none}body.verse-locked #enterVerseHero:before{animation:none}}
 </style>
 </head>
 <body class="verse-locked">
 <div id="fallback" aria-hidden="true"></div><canvas id="universe" aria-label="A cinematic interactive 3D universe"></canvas><div class="vignette"></div><div class="entry-warp" id="entryWarp" aria-hidden="true"><div class="warp-grid"></div><div class="warp-ring ring-one"></div><div class="warp-ring ring-two"></div><div class="warp-ring ring-three"></div><div class="warp-core"><span>VYRALVERSE</span><b>GATEWAY OPEN</b><small>REALITY IS RECONFIGURING</small></div><div class="warp-flash"></div></div>
-<header><div class="logo">VYRAL<b>VERSE</b></div><div class="navmeta">THE INTERNET'S PLAYGROUND&nbsp; / &nbsp;001</div><button class="navbutton" id="enterVerse" type="button">ENTER THE UNIVERSE ↗</button><button class="navbutton" id="accountButton" type="button">SIGN IN ↗</button></header>
+<header><div class="logo">VYRAL<b>VERSE</b></div><div class="navmeta">THE INTERNET'S PLAYGROUND&nbsp; / &nbsp;001</div><button class="navbutton" id="enterVerse" type="button" aria-label="Enter the VYRALVERSE universe"><span class="gate-label">ENTER THE UNIVERSE</span><span class="gate-arrow" aria-hidden="true">↗</span></button><button class="navbutton" id="accountButton" type="button">SIGN IN ↗</button></header>
 <main>
-<section class="hero"><div class="hero-copy"><div class="eyebrow">✦ &nbsp; THE INTERNET’S PLAYGROUND</div><h1>ENTER THE<br><span>UNKNOWN.</span></h1><p>A universe of hidden worlds, strange challenges and unexpected discoveries is waiting beyond this gate.</p><div class="actions"><button class="btn btn-primary" id="enterVerseHero" type="button">ENTER THE UNIVERSE&nbsp; ↗</button></div><div class="gesture"><span>✧</span> FOLLOW THE LIGHT · TRUST YOUR CURIOSITY</div></div></section>
+<section class="hero"><div class="hero-copy"><div class="eyebrow">✦ &nbsp; THE INTERNET’S PLAYGROUND</div><h1>ENTER THE<br><span>UNKNOWN.</span></h1><p>A universe of hidden worlds, strange challenges and unexpected discoveries is waiting beyond this gate.</p><div class="actions"><button class="btn btn-primary" id="enterVerseHero" type="button" aria-label="Enter the VYRALVERSE universe"><span class="gate-label">ENTER THE UNIVERSE</span><span class="gate-arrow" aria-hidden="true">↗</span></button></div><div class="gesture" id="gateStatus" aria-live="polite"><span>✧</span> GATE SEALED · AWAITING YOUR SIGNAL</div></div></section>
 <div class="corner">A LIVING UNIVERSE&nbsp; · &nbsp;NO TWO VISITS ALIKE</div><div class="world-chip" id="worldChip">WORLD SHIFT · LOADING</div><div class="bottomhud"><span class="signal">UNIVERSE ONLINE</span><span>SECTOR 001&nbsp; / &nbsp;UNKNOWN SPACE</span></div>
 
 
@@ -480,6 +497,7 @@ render();
  function enterUniverse(){
    if(entered)return;entered=true;
    enterButtons.forEach(b=>{b.disabled=true;b.setAttribute('aria-busy','true')});
+   const gateStatus=document.getElementById('gateStatus');if(gateStatus)gateStatus.innerHTML='<span>✧</span> SIGNAL ACCEPTED · OPENING THE RIFT';
    document.body.classList.add('gateway-crossing');
    if(warp){warp.classList.add('active');warp.setAttribute('aria-hidden','false')}
    if(navigator.vibrate)navigator.vibrate([18,35,42]);
@@ -491,7 +509,7 @@ render();
      if(warp){warp.classList.remove('active');warp.setAttribute('aria-hidden','true')}
      enterButtons.forEach(b=>{b.disabled=false;b.removeAttribute('aria-busy')});
    };
-   window.setTimeout(reveal,reduced?80:1450);
+   window.setTimeout(reveal,reduced?80:2100);
  }
  enterButtons.forEach(b=>b.addEventListener('click',enterUniverse));
 })();
