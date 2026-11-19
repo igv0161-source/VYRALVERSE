@@ -114,13 +114,28 @@ button{position:relative;overflow:hidden}
 .rift-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.rift-button{border:1px solid #a88cff70;border-radius:30px;padding:12px 20px;background:linear-gradient(120deg,#29204e,#123149);color:#f4f1ff;font:10px 'DM Mono';letter-spacing:.12em;cursor:pointer}.rift-button:disabled{opacity:.45;cursor:not-allowed}.rift-status{min-height:25px;margin-top:14px;text-align:center;color:#b4c6dd;font:10px 'DM Mono';letter-spacing:.08em}
 .rift-side{padding:22px;display:flex;flex-direction:column}.rift-side h3{font-size:24px;margin:12px 0}.rift-side p{font-size:13px;color:#9ba9c1;line-height:1.7}.rift-rounds{display:flex;gap:7px;margin:12px 0 18px}.rift-rounds i{height:5px;flex:1;border-radius:5px;background:#26304a}.rift-rounds i.done{background:linear-gradient(90deg,#8df2ff,#a88cff);box-shadow:0 0 10px #8df2ff77}.rift-stat{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid #ffffff12;color:#8f9db6;font:9px 'DM Mono';letter-spacing:.1em}.rift-stat b{color:#e8cb91}.rift-side .rift-button{margin-top:auto}
 @media(max-width:720px){.rift{padding:65px 5vw 100px}.rift-console{grid-template-columns:1fr}.rift-board{min-height:410px;padding:14px}.rift-side{min-height:260px}.rift-node{width:60px;height:60px}.rift-node:nth-child(1){left:calc(50% - 30px)}.rift-node:nth-child(2){top:calc(50% - 30px)}.rift-node:nth-child(3){left:calc(50% - 30px)}.rift-node:nth-child(4){top:calc(50% - 30px)}}
+
+/* EXPLORATION-FIRST GATEWAY */
+body.verse-locked main>section:not(.hero),body.verse-locked footer,body.verse-locked .vv-dock,body.verse-locked .command-launcher,body.verse-locked #accountButton,body.verse-locked .corner,body.verse-locked .bottomhud{display:none!important}
+body.verse-locked .world-chip{opacity:.72}
+body.verse-locked header{background:linear-gradient(180deg,rgba(3,6,18,.68),transparent);border-bottom:1px solid rgba(150,210,255,.08)}
+body.verse-locked .hero{min-height:calc(100svh - 76px);display:flex;align-items:center;padding-top:90px;padding-bottom:90px}
+body.verse-locked .hero-copy{max-width:620px}
+body.verse-locked .hero-copy h1{font-size:clamp(3.6rem,9vw,7.8rem);line-height:.91;letter-spacing:-.075em}
+body.verse-locked .hero-copy p{max-width:430px;color:#c0c9dc}
+body.verse-locked .hero-copy .btn-primary{min-height:58px;padding:0 28px;letter-spacing:.13em;box-shadow:0 0 35px rgba(90,220,255,.22)}
+body.verse-locked .gesture{margin-top:30px}
+body.verse-entered .hero{display:none!important}
+body.verse-entered #accountButton{display:inline-flex}
+body.verse-entered .corner,body.verse-entered .bottomhud{display:flex}
+@media(max-width:600px){body.verse-locked .hero{min-height:calc(100svh - 68px);padding:50px 22px 90px}body.verse-locked .hero-copy h1{font-size:clamp(3.3rem,15vw,5.2rem)}body.verse-locked .navmeta{display:none}}
 </style>
 </head>
-<body>
+<body class="verse-locked">
 <div id="fallback" aria-hidden="true"></div><canvas id="universe" aria-label="A cinematic interactive 3D universe"></canvas><div class="vignette"></div>
-<header><div class="logo">VYRAL<b>VERSE</b></div><div class="navmeta">THE INTERNET'S PLAYGROUND&nbsp; / &nbsp;001</div><a class="navbutton" href="#portals">ENTER THE VERSE ↗</a><button class="navbutton" id="accountButton" type="button">SIGN IN ↗</button></header>
+<header><div class="logo">VYRAL<b>VERSE</b></div><div class="navmeta">THE INTERNET'S PLAYGROUND&nbsp; / &nbsp;001</div><button class="navbutton" id="enterVerse" type="button">ENTER THE UNIVERSE ↗</button><button class="navbutton" id="accountButton" type="button">SIGN IN ↗</button></header>
 <main>
-<section class="hero"><div class="hero-copy"><div class="eyebrow">✦ &nbsp; A NEW KIND OF PLAYGROUND</div><h1>THE WORLD<br>IS NOT <span>ENOUGH.</span></h1><p>Step beyond the ordinary. Drift through strange worlds, unlock curious experiences and discover what happens when imagination has no borders.</p><div class="actions"><a class="btn btn-primary" href="#portals">CHOOSE YOUR PORTAL&nbsp; ↘</a><button class="btn btn-ghost" id="surprise">OPEN A RANDOM GATE&nbsp; ✦</button></div><div class="gesture"><span>✧</span> DRAG THE UNIVERSE · FOLLOW THE LIGHTS · EXPLORE</div></div></section>
+<section class="hero"><div class="hero-copy"><div class="eyebrow">✦ &nbsp; THE INTERNET’S PLAYGROUND</div><h1>ENTER THE<br><span>UNKNOWN.</span></h1><p>A universe of hidden worlds, strange challenges and unexpected discoveries is waiting beyond this gate.</p><div class="actions"><button class="btn btn-primary" id="enterVerseHero" type="button">ENTER THE UNIVERSE&nbsp; ↗</button></div><div class="gesture"><span>✧</span> FOLLOW THE LIGHT · TRUST YOUR CURIOSITY</div></div></section>
 <div class="corner">A LIVING UNIVERSE&nbsp; · &nbsp;NO TWO VISITS ALIKE</div><div class="world-chip" id="worldChip">WORLD SHIFT · LOADING</div><div class="bottomhud"><span class="signal">UNIVERSE ONLINE</span><span>SECTOR 001&nbsp; / &nbsp;UNKNOWN SPACE</span></div>
 
 
@@ -342,7 +357,7 @@ let communityChannel=null;function startCommunityRealtime(){if(!currentUser||com
 <nav class="vv-dock" id="vvDock" aria-label="Universe navigation">
 <button class="vv-tab" type="button" data-target="top" aria-current="page"><i>◎</i><span>HOME</span></button><button class="vv-tab" type="button" data-target="portals"><i>✧</i><span>PORTALS</span></button><button class="vv-tab" type="button" data-target="arcade"><i>✦</i><span>ARCADE</span></button><button class="vv-tab" type="button" data-target="riftChamber"><i>⌬</i><span>RIFT</span></button><button class="vv-tab" type="button" data-target="anomaly"><i>⌬</i><span>DAILY</span></button><button class="vv-tab" type="button" data-target="community"><i>◇</i><span>FEED</span></button><button class="vv-tab" type="button" data-target="rooms"><i>⌘</i><span>ROOMS</span></button><button class="vv-tab" type="button" data-target="account"><i>◉</i><span>IDENTITY</span></button></nav>
 <script>(()=>{const dock=document.getElementById('vvDock');if(!dock)return;const tabs=[...dock.querySelectorAll('.vv-tab')],sections=['top','portals','arcade','riftChamber','anomaly','community','rooms','account'];function activate(k){tabs.forEach(t=>{if(t.dataset.target===k)t.setAttribute('aria-current','page');else t.removeAttribute('aria-current')})}
-tabs.forEach(t=>t.addEventListener('click',()=>{const k=t.dataset.target;if(k==='account'){document.getElementById('accountButton')?.click();activate(k);return}const el=k==='top'?document.querySelector('.hero'):document.getElementById(k);if(el){el.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});activate(k);if(navigator.vibrate)navigator.vibrate(9)}}));
+tabs.forEach(t=>t.addEventListener('click',()=>{const k=t.dataset.target;if(k==='account'){document.getElementById('accountButton')?.click();activate(k);return}const el=k==='top'&&document.body.classList.contains('verse-entered')?document.getElementById('portals'):(k==='top'?document.querySelector('.hero'):document.getElementById(k));if(el){el.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});activate(k);if(navigator.vibrate)navigator.vibrate(9)}}));
 if('IntersectionObserver'in window){const io=new IntersectionObserver(es=>{const b=es.filter(x=>x.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];if(b)activate(b.target.id)},{rootMargin:'-28% 0px -55% 0px',threshold:[0,.15,.35,.6]});sections.filter(x=>!['top','account'].includes(x)).map(x=>document.getElementById(x)).filter(Boolean).forEach(x=>io.observe(x));const hero=document.querySelector('.hero');if(hero)new IntersectionObserver(es=>{if(es[0].isIntersecting)activate('top')},{threshold:.35}).observe(hero)}
 let sx=0,sy=0;const d=document.querySelector('#modal .dialog');if(d){d.addEventListener('touchstart',e=>{sx=e.changedTouches[0].clientX;sy=e.changedTouches[0].clientY},{passive:true});d.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(Math.abs(dx)<85||Math.abs(dx)<Math.abs(dy)*1.35)return;const cards=[...document.querySelectorAll('.portal[data-title]')],i=cards.findIndex(c=>c.dataset.title===document.getElementById('modalTitle').textContent);cards[(i+(dx<0?1:-1)+cards.length)%cards.length]?.click();if(navigator.vibrate)navigator.vibrate(7)},{passive:true})}
 document.addEventListener('pointerdown',e=>{const b=e.target.closest('button');if(!b||b.disabled||matchMedia('(prefers-reduced-motion: reduce)').matches)return;const r=b.getBoundingClientRect(),z=Math.max(r.width,r.height)*1.35,x=document.createElement('span');x.className='vv-ripple';x.style.width=x.style.height=z+'px';x.style.left=e.clientX-r.left-z/2+'px';x.style.top=e.clientY-r.top-z/2+'px';b.appendChild(x);setTimeout(()=>x.remove(),600)},{passive:true});
@@ -425,4 +440,19 @@ launcher.addEventListener('click',open);overlay.addEventListener('click',e=>{if(
 input.addEventListener('keydown',e=>{if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();active=(active+(e.key==='ArrowDown'?1:-1)+filtered.length)%filtered.length;render();results.querySelector('.active')?.scrollIntoView({block:'nearest'})}else if(e.key==='Enter'){e.preventDefault();select(active)}else if(e.key==='Escape')close()});
 document.addEventListener('keydown',e=>{const tag=e.target?.tagName?.toLowerCase(),typing=['input','textarea','select'].includes(tag)||e.target?.isContentEditable;if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();overlay.classList.contains('open')?close():open()}else if(e.key==='/'&&!typing&&!overlay.classList.contains('open')){e.preventDefault();open()}else if(e.key==='Escape'&&overlay.classList.contains('open'))close()});
 render();
-})();</script></body></html>
+})();</script><script>
+(()=> {
+ const enterButtons=[document.getElementById('enterVerse'),document.getElementById('enterVerseHero')].filter(Boolean);
+ let entered=false;
+ function enterUniverse(){
+   if(entered)return; entered=true;
+   document.body.classList.remove('verse-locked');
+   document.body.classList.add('verse-entered');
+   try{sessionStorage.setItem('vv-universe-entered','1')}catch(e){}
+   const hub=document.getElementById('portals');
+   if(hub)setTimeout(()=>hub.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'}),90);
+   if(navigator.vibrate)navigator.vibrate(16);
+ }
+ enterButtons.forEach(b=>b.addEventListener('click',enterUniverse));
+})();
+</script></body></html>
