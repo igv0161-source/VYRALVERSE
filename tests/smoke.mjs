@@ -43,6 +43,10 @@ try {
 
   await page.locator('[data-open-category="connect"]').click();
   assert.equal(await page.locator('#connect').evaluate(el => el.open), true);
+  await page.locator('#commandLauncher').click();
+  await page.locator('#commandSearch').fill('GODSEYE');
+  await page.locator('.command-item').first().click();
+  assert.equal(await page.locator('#discover').evaluate(el => el.open), true, 'Command deck should open the Discover section before navigating');
 
   await page.goto('http://127.0.0.1:4173/nexus-visual-builder.html', { waitUntil: 'domcontentloaded' });
   await page.locator('#canvas .canvas-section').first().waitFor();
