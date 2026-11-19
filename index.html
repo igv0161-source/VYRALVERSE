@@ -671,7 +671,7 @@ const actions=[
 let active=0,filtered=actions;
 function open(){overlay.classList.add('open');input.value='';active=0;render();setTimeout(()=>input.focus(),20)}
 function close(){overlay.classList.remove('open');launcher.focus()}
-function jump(sel){close();document.querySelector(sel)?.scrollIntoView({behavior:'smooth',block:'start'})}
+function jump(sel){close();const target=document.querySelector(sel);if(!target)return;const group=target.closest('details');if(group)group.open=true;target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'})}
 function portal(name){close();document.querySelectorAll('.portal[data-title]').forEach(b=>{if(b.dataset.title===name)b.click()})}
 function render(){const q=input.value.toLowerCase().trim();filtered=actions.filter(a=>(a[0]+' '+a[1]).toLowerCase().includes(q));active=Math.min(active,Math.max(0,filtered.length-1));results.innerHTML=filtered.length?filtered.map((a,i)=>'<button class="command-item '+(i===active?'active':'')+'" data-i="'+i+'" type="button"><span class="command-icon">'+a[2]+'</span><span><b>'+a[0]+'</b><small>'+a[1]+'</small></span></button>').join(''):'<div class="command-empty">NO SIGNAL FOUND · TRY ANOTHER SEARCH</div>';results.querySelectorAll('[data-i]').forEach(b=>b.addEventListener('click',()=>select(Number(b.dataset.i))))}
 function select(i){filtered[i]?.[3]()}
