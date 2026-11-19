@@ -74,7 +74,7 @@ try{
  const pts=scene.children.filter(o=>o.isPoints);
  function resize(){const w=innerWidth,h=innerHeight;camera.aspect=w/h;camera.position.z=w<600?12.7:11;camera.updateProjectionMatrix();renderer.setSize(w,h);renderer.setPixelRatio(Math.min(devicePixelRatio,w<600?1.35:1.8))}
  addEventListener('resize',resize);
- function pointerMove(e){if(dragging){const dx=e.clientX-lastX,dy=e.clientY-lastY;targetY+=dx*.004;targetX=Math.max(-.38,Math.min(.38,targetX+dy*.003));lastX=e.clientX;lastY=e.clientY}else{targetY+=(e.clientX/innerWidth-.5)*.22;targetX+=(e.clientY/innerHeight-.5)*.08}}
+ function pointerMove(e){if(dragging){const dx=e.clientX-lastX,dy=e.clientY-lastY;targetY+=dx*.004;targetX=Math.max(-.38,Math.min(.38,targetX+dy*.003));lastX=e.clientX;lastY=e.clientY}else{targetY=(e.clientX/innerWidth-.5)*.22;targetX=(e.clientY/innerHeight-.5)*.08}}
  canvas.addEventListener('pointerdown',e=>{dragging=true;lastX=e.clientX;lastY=e.clientY;canvas.setPointerCapture?.(e.pointerId)});canvas.addEventListener('pointermove',pointerMove);canvas.addEventListener('pointerup',()=>dragging=false);canvas.addEventListener('pointercancel',()=>dragging=false);
  function pick(e){const rect=canvas.getBoundingClientRect();mouse.x=((e.clientX-rect.left)/rect.width)*2-1;mouse.y=-((e.clientY-rect.top)/rect.height)*2+1;raycaster.setFromCamera(mouse,camera);const hits=raycaster.intersectObjects(portalMeshes,false);if(hits.length){const index=hits[0].object.parent.userData.index;openPortal(index)}}
  canvas.addEventListener('click',pick);
