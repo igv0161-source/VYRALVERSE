@@ -68,6 +68,20 @@ try {
   assert.match(download.suggestedFilename(), /\.html$/i);
 
   await page.goto('http://127.0.0.1:4173/nexus-studio.html', { waitUntil: 'domcontentloaded' });
+  await page.locator('[data-template="app"]').click();
+  const studioFrame = page.frameLocator('#preview');
+  await studioFrame.locator('#taskInput').fill('Smoke test task');
+  await studioFrame.locator('#taskForm button').click();
+  assert.equal(await studioFrame.locator('#tasks li').count(), 1, 'Focus Board template should add a task inside the sandbox');
+  await studioFrame.locator('#tasks li input[type="checkbox"]').check();
+  assert.equal(await studioFrame.locator('#tasks li').getAttribute('class'), 'done', 'Focus Board task should toggle complete');
+  await studioFrame.locator('#tasks li button.remove').click();
+  assert.equal(await studioFrame.locator('#tasks li').count(), 0, 'Focus Board should remove a task');
+
+  await page.locator('[data-template="game"]').click();
+  await studioFrame.locator('#arena').waitFor();
+  await studioFrame.locator('#start').click();
+
   await page.locator('#htmlCode').waitFor();
   await page.locator('#htmlCode').fill('<h1 id="smoke-check">NEXUS PREVIEW WORKS</h1>');
   await page.locator('#run').click();
@@ -75,7 +89,7 @@ try {
   assert.equal(await page.frameLocator('#preview').locator('#smoke-check').textContent(), 'NEXUS PREVIEW WORKS');
 
   if (pageErrors.length) throw new Error('Browser runtime errors: ' + pageErrors.join(' | '));
-  console.log('PASS: homepage, Surprise Me, category navigation, portal mini-experience, category navigation, unique room controls, Visual Builder add/undo/redo/drag/export, Code Studio live preview.');
+  console.log('PASS: homepage, Surprise Me, category navigation, portal mini-experience, category navigation, unique room controls, Visual Builder add/undo/redo/drag/export, Focus Board task actions, Star Catcher startup and Code Studio live preview.');
 } finally {
   await browser.close();
 }
