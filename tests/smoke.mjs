@@ -22,6 +22,8 @@ try {
   await page.locator('#surprise').click();
   await page.locator('#modal.open').waitFor();
   await page.locator('#dismiss').click();
+  await page.locator('#enterVerseHero').click();
+  await page.locator('body.verse-entered').waitFor({ timeout: 5000 });
   await page.locator('.portal[data-title="Mind Mirror"]').click();
   await page.locator('input[name="a"][value="curiosity"]').check();
   await page.locator('input[name="b"][value="logic"]').check();
@@ -29,8 +31,6 @@ try {
   await page.locator('#mindForm button[type="submit"]').click();
   await page.locator('#mindResult').getByText('THE FRONTIER SOUL').waitFor();
   await page.locator('#dismiss').click();
-  await page.locator('#enterVerseHero').click();
-  await page.locator('body.verse-entered').waitFor({ timeout: 5000 });
 
   await page.locator('[data-open-category="play"]').click();
   assert.equal(await page.locator('#play').evaluate(el => el.open), true);
