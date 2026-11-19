@@ -19,9 +19,6 @@ try {
   assert.deepEqual(duplicateIds, [], 'Home must not contain duplicate element IDs');
   assert.equal(await page.locator('#play').evaluate(el => el.open), false, 'Feature groups should start collapsed for a clean home screen');
   assert.equal(await page.locator('#play').isVisible(), false, 'Feature sections should remain hidden behind the entry gate');
-  await page.locator('#enterVerseHero').click();
-  await page.locator('body.verse-entered').waitFor({ timeout: 5000 });
-
   await page.locator('#surprise').click();
   await page.locator('#modal.open').waitFor();
   await page.locator('#dismiss').click();
@@ -32,6 +29,8 @@ try {
   await page.locator('#mindForm button[type="submit"]').click();
   await page.locator('#mindResult').getByText('THE FRONTIER SOUL').waitFor();
   await page.locator('#dismiss').click();
+  await page.locator('#enterVerseHero').click();
+  await page.locator('body.verse-entered').waitFor({ timeout: 5000 });
 
   await page.locator('[data-open-category="play"]').click();
   assert.equal(await page.locator('#play').evaluate(el => el.open), true);
