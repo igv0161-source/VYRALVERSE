@@ -222,6 +222,55 @@ header{background:#03050b70;border-bottom-color:#b8eaff1c}
 @media(max-width:760px){.hero-rift{opacity:.58;filter:saturate(1.15) contrast(1.06) drop-shadow(0 0 45px #55dffb25)}}
 @media(prefers-reduced-motion:reduce){.hero-rift,.rift-core{animation:none!important}}
 
+
+/* GODSEYE — live public Earth intelligence console */
+.godseye{position:relative;z-index:4;padding:92px 7vw 110px;background:linear-gradient(180deg,#050914 0%,#070b17 100%);border-top:1px solid #9cefff20;border-bottom:1px solid #9cefff20;overflow:hidden}
+.godseye:before{content:"";position:absolute;width:700px;height:700px;right:-260px;top:-250px;border-radius:50%;background:radial-gradient(circle,#2b7b9b20,transparent 68%);pointer-events:none}
+.godseye-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:28px;position:relative}
+.godseye-head h2{font-size:clamp(34px,5vw,58px);letter-spacing:-.055em;margin:9px 0 0}
+.godseye-head p{max-width:410px;color:#aab8cc;font-size:13px;line-height:1.7;margin:0}
+.godseye-live{display:inline-flex;align-items:center;gap:8px;color:#a8f5d2;font:9px 'DM Mono';letter-spacing:.2em}
+.godseye-live:before{content:"";width:7px;height:7px;border-radius:50%;background:#5dffb0;box-shadow:0 0 13px #5dffb0;animation:godseye-pulse 1.8s infinite}
+@keyframes godseye-pulse{50%{opacity:.35;transform:scale(.7)}}
+.godseye-layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(280px,.8fr);gap:16px;position:relative}
+.godseye-globe-card,.godseye-panel{border:1px solid #a5eaff24;background:linear-gradient(145deg,#101a2bdb,#070c18ed);box-shadow:0 24px 80px #0006,inset 0 1px #ffffff08;border-radius:18px;overflow:hidden}
+.godseye-globe-card{min-height:480px;position:relative}
+.godseye-globe-top{position:absolute;z-index:2;left:22px;right:22px;top:19px;display:flex;justify-content:space-between;align-items:center;gap:12px;pointer-events:none}
+.godseye-kicker{font:9px 'DM Mono';letter-spacing:.19em;color:#9eb3cc}
+.godseye-globe-top strong{display:block;font-size:13px;letter-spacing:.08em;margin-top:5px}
+.godseye-legend{display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end;font:8px 'DM Mono';letter-spacing:.1em;color:#b6c5d9}
+.godseye-legend span{display:inline-flex;align-items:center;gap:5px}.godseye-legend i{width:6px;height:6px;border-radius:50%;display:inline-block}
+#godseyeGlobe{width:100%;height:480px;display:block;touch-action:pan-y}
+.godseye-hud{position:absolute;z-index:2;left:22px;right:22px;bottom:18px;display:flex;justify-content:space-between;gap:12px;align-items:end;pointer-events:none}
+.godseye-hud span{font:8px 'DM Mono';letter-spacing:.12em;color:#9fb3ca}
+.godseye-hud b{display:block;color:#eafaff;font-size:12px;margin-top:5px;letter-spacing:.05em}
+.godseye-panel{padding:20px;display:flex;flex-direction:column;gap:14px}
+.godseye-panel-title{display:flex;justify-content:space-between;align-items:center;font:9px 'DM Mono';letter-spacing:.18em;color:#b6c7dc}
+.godseye-statgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.godseye-stat{padding:13px;border:1px solid #9bdfff1b;border-radius:11px;background:#ffffff05}
+.godseye-stat small{display:block;color:#8497b1;font:8px 'DM Mono';letter-spacing:.13em}
+.godseye-stat strong{display:block;font-size:25px;letter-spacing:-.04em;margin-top:6px;color:#effaff}
+.godseye-stat em{display:block;font:8px 'DM Mono';font-style:normal;color:#91a6bf;margin-top:3px}
+.godseye-iss{padding:13px;border:1px solid #ffcb8b38;border-radius:11px;background:linear-gradient(120deg,#e7b76e12,#ffffff03)}
+.godseye-iss-head{display:flex;justify-content:space-between;gap:8px;color:#f2d5a9;font:9px 'DM Mono';letter-spacing:.12em}
+.godseye-iss-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.godseye-iss-grid b{display:block;font-size:15px;color:#fff}.godseye-iss-grid small{font:8px 'DM Mono';color:#a89c8a}
+.godseye-feed{display:flex;flex-direction:column;gap:7px;min-height:100px;max-height:240px;overflow:auto;padding-right:3px}
+.godseye-event{display:block;width:100%;text-align:left;border:1px solid #a4dfff18;border-radius:9px;background:#ffffff04;padding:10px;color:#e8f3ff;text-decoration:none}
+.godseye-event strong{display:block;font-size:11px;line-height:1.4}.godseye-event small{display:block;margin-top:5px;color:#92a5be;font:8px 'DM Mono';letter-spacing:.08em}
+.godseye-event:hover{border-color:#8ceaff70;background:#8ceaff09}
+.godseye-tools{display:flex;gap:8px;flex-wrap:wrap}
+.godseye-tools input{flex:1;min-width:120px;border:1px solid #a8dfff35;border-radius:8px;background:#050b16;color:#fff;padding:11px 12px;outline:none;font:11px 'Space Grotesk'}
+.godseye-tools input:focus{border-color:#8ceaff}
+.godseye-tools button,.godseye-refresh{border:1px solid #8ceaff65;border-radius:8px;background:#8ceaff12;color:#dffaff;padding:10px 13px;font:9px 'DM Mono';letter-spacing:.1em;cursor:pointer}
+.godseye-weather{padding:12px;border-radius:10px;background:#8ceaff08;border:1px solid #8ceaff20;color:#a9bdd2;font-size:10px;line-height:1.6}
+.godseye-weather b{color:#f3fbff;font-size:18px;display:block}
+.godseye-foot{margin-top:13px;color:#778ba5;font:8px/1.7 'DM Mono';letter-spacing:.04em}
+.godseye-foot a{color:#a9dff0}
+@media(max-width:900px){.godseye-layout{grid-template-columns:1fr}.godseye-panel{display:grid;grid-template-columns:1fr 1fr}.godseye-panel-title,.godseye-feed,.godseye-tools,.godseye-weather,.godseye-foot{grid-column:1/-1}}
+@media(max-width:600px){.godseye{padding:68px 5vw 78px}.godseye-head{display:block}.godseye-head p{margin-top:12px}.godseye-globe-card{min-height:370px}#godseyeGlobe{height:370px}.godseye-globe-top{left:13px;right:13px;top:13px;display:block}.godseye-legend{justify-content:flex-start;margin-top:10px}.godseye-hud{left:13px;right:13px;bottom:12px}.godseye-panel{display:flex;padding:14px}.godseye-stat strong{font-size:22px}}
+@media(prefers-reduced-motion:reduce){.godseye-live:before{animation:none}}
+
 </style>
 </head>
 <body class="verse-locked">
@@ -260,7 +309,37 @@ header{background:#03050b70;border-bottom-color:#b8eaff1c}
 <button class="portal" style="--glow:#edcc8c" data-title="Mystery Drop" data-desc="A collection of riddles, hidden clues and curious little rabbit holes."><small>04 / THE UNKNOWN</small><span class="tag">PREVIEW</span><span class="symbol">⌁</span><strong>Mystery Drop</strong><em>Hidden signals. Strange clues. One more question.</em></button>
 <button class="portal" style="--glow:#8fffc9" data-title="Dream Studio" data-desc="Turn a passing thought into a visual direction or cinematic concept."><small>05 / CREATIVE ENGINE</small><span class="tag">PREVIEW</span><span class="symbol">✳</span><strong>Dream Studio</strong><em>Turn a wild thought into something worth seeing.</em></button>
 <button class="portal" style="--glow:#ffb47d" data-title="Friend Quests" data-desc="Shareable mini-challenges made to spark reactions and friendly competition."><small>06 / SOCIAL PLAY</small><span class="tag">PREVIEW</span><span class="symbol">⌘</span><strong>Friend Quests</strong><em>Send the challenge. Start the chaos. Make a memory.</em></button>
-</div></section></main>
+</div></section>
+<section class="godseye" id="godseye">
+ <div class="godseye-head">
+  <div><div class="eyebrow">VYRALVERSE INTELLIGENCE DIVISION / 007</div><h2>GODSEYE<span style="color:var(--ice)">.</span></h2><div class="godseye-live" id="godseyeStatus">CONNECTING TO PUBLIC DATA</div></div>
+  <p>A live window onto our planet. Track verified public signals from seismic networks, NASA’s natural-event feed and the International Space Station.</p>
+ </div>
+ <div class="godseye-layout">
+  <div class="godseye-globe-card">
+   <div class="godseye-globe-top"><div><div class="godseye-kicker">PLANETARY TELEMETRY / EARTH</div><strong>LIVE ORBITAL VIEW</strong></div><div class="godseye-legend"><span><i style="background:#ffb16e"></i>ISS</span><span><i style="background:#ff6b86"></i>QUAKES</span><span><i style="background:#8fffd0"></i>NASA EVENTS</span></div></div>
+   <canvas id="godseyeGlobe" aria-label="Interactive 3D Earth globe with live public event markers"></canvas>
+   <div class="godseye-hud"><div><span>DATA MODE</span><b>PUBLIC / OPEN SOURCES</b></div><div style="text-align:right"><span>LAST SYNC</span><b id="godseyeSync">WAITING FOR FEEDS</b></div></div>
+  </div>
+  <aside class="godseye-panel">
+   <div class="godseye-panel-title"><span>PLANETARY SIGNALS</span><button class="godseye-refresh" id="godseyeRefresh" type="button">↻ REFRESH</button></div>
+   <div class="godseye-statgrid">
+    <div class="godseye-stat"><small>EARTHQUAKES / 24H</small><strong id="godseyeQuakes">—</strong><em>USGS live feed</em></div>
+    <div class="godseye-stat"><small>OPEN NATURAL EVENTS</small><strong id="godseyeEvents">—</strong><em>NASA EONET</em></div>
+   </div>
+   <div class="godseye-iss">
+    <div class="godseye-iss-head"><span>✦ ISS / NORAD 25544</span><span id="godseyeIssState">ACQUIRING</span></div>
+    <div class="godseye-iss-grid"><div><b id="godseyeLat">—</b><small>LATITUDE</small></div><div><b id="godseyeLon">—</b><small>LONGITUDE</small></div><div><b id="godseyeAlt">—</b><small>ALTITUDE KM</small></div></div>
+   </div>
+   <div class="godseye-panel-title"><span>RECENT VERIFIED EVENTS</span><span id="godseyeFeedCount">0 SIGNALS</span></div>
+   <div class="godseye-feed" id="godseyeFeed" aria-live="polite"><div class="godseye-weather">Waiting for live feeds. No sample or simulated events are shown.</div></div>
+   <div class="godseye-panel-title"><span>WEATHER LOOKUP</span><span>OPEN-METEO</span></div>
+   <form class="godseye-tools" id="godseyeWeatherForm"><input id="godseyeCity" maxlength="70" placeholder="Search a city worldwide" aria-label="City for weather lookup"><button type="submit">SCAN</button></form>
+   <div class="godseye-weather" id="godseyeWeather">Search a city to retrieve current modelled weather conditions.</div>
+   <div class="godseye-foot">DATA IS NOT A SURVEILLANCE SYSTEM. EVENT LOCATIONS ARE PUBLIC REPORTS; WEATHER IS MODEL OUTPUT. SOURCES: <a href="https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php" target="_blank" rel="noopener">USGS</a> · <a href="https://eonet.gsfc.nasa.gov/docs/v3" target="_blank" rel="noopener">NASA EONET</a> · <a href="https://wheretheiss.at/w/developer" target="_blank" rel="noopener">ISS API</a> · <a href="https://open-meteo.com/" target="_blank" rel="noopener">OPEN-METEO</a>. FLIGHT TRACKING IS NOT INCLUDED; NO PRIVATE OR RESTRICTED DATA IS USED.</div>
+  </aside>
+ </div>
+</section></main>
 <footer><span>© 2026 VYRALVERSE</span><span>ENTER THE UNKNOWN · CREATE THE UNEXPECTED</span><span>AN UNIVERSE IN PROGRESS</span></footer>
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="dialog"><button class="close" id="close" aria-label="Close">×</button><div class="eyebrow">PORTAL SIGNAL ACQUIRED</div><h3 id="modalTitle"></h3><p id="modalDesc"></p><div class="portal-play" id="portalPlay"></div><p class="note" id="portalNote">These experiences run locally in your browser. AI generation and live multiplayer are not connected yet.</p><button class="btn btn-primary" id="dismiss">RETURN TO THE UNIVERSE</button></div></div>
 <script>
@@ -539,6 +618,7 @@ const actions=[
 ['Dream Studio','Transform an idea into a concept','✧',()=>portal('Dream Studio')],
 ['Friend Quests','Create a challenge to share','⌘',()=>portal('Friend Quests')],
 ['Daily Anomaly','Decode today’s transmission','⌬',()=>jump('#anomaly')],
+['GODSEYE Live Earth','Open the real-time planetary intelligence console','◎',()=>jump('#godseye')],
 ['Explorer Journal','XP, achievements and discoveries','✦',()=>jump('#explorer')],
 ['Global Leaderboard','Explore the shared ranking','↗',()=>jump('#leaderboard')],
 ['My Explorer Identity','Open your cosmic identity','◎',()=>{close();document.getElementById('accountButton')?.click()}],
@@ -578,4 +658,46 @@ render();
  }
  enterButtons.forEach(b=>b.addEventListener('click',enterUniverse));
 })();
-</script></body></html>
+</script>
+<script type="module">
+import * as THREE from 'three';
+(()=> {
+ const $=id=>document.getElementById(id),canvas=$('godseyeGlobe');if(!canvas)return;
+ const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ let renderer,scene,camera,globe,markerGroup,issDot,earthTexture;
+ const markerObjects=[];
+ const status=(s)=>$('godseyeStatus').textContent=s;
+ function xyz(lat,lon,r=2.05){const a=lat*Math.PI/180,b=lon*Math.PI/180;return new THREE.Vector3(-r*Math.cos(a)*Math.sin(b),r*Math.sin(a),r*Math.cos(a)*Math.cos(b))}
+ function makeDot(color,size=.035){return new THREE.Mesh(new THREE.SphereGeometry(size,10,10),new THREE.MeshBasicMaterial({color,transparent:true,opacity:.98}))}
+ try{
+  scene=new THREE.Scene();camera=new THREE.PerspectiveCamera(38,1,.1,100);camera.position.set(0,0,6.7);
+  renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true,powerPreference:'low-power'});renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.5));renderer.setSize(canvas.clientWidth||600,canvas.clientHeight||480,false);renderer.outputColorSpace=THREE.SRGBColorSpace;
+  scene.add(new THREE.AmbientLight(0x9bbce8,1.3));const sun=new THREE.DirectionalLight(0xffffff,2.2);sun.position.set(-4,3,5);scene.add(sun);
+  globe=new THREE.Group();scene.add(globe);
+  const tex=new THREE.TextureLoader();earthTexture=tex.load('https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg',()=>status('EARTH TEXTURE ONLINE · SYNCING DATA'),undefined,()=>status('GLOBE ONLINE · TEXTURE UNAVAILABLE'));
+  const earth=new THREE.Mesh(new THREE.SphereGeometry(2,64,48),new THREE.MeshStandardMaterial({map:earthTexture,color:0xb9d9ee,roughness:.9,metalness:.05}));globe.add(earth);
+  const atmo=new THREE.Mesh(new THREE.SphereGeometry(2.045,64,48),new THREE.MeshBasicMaterial({color:0x5ddfff,transparent:true,opacity:.085,side:THREE.BackSide}));globe.add(atmo);
+  const grid=new THREE.Group();const mat=new THREE.LineBasicMaterial({color:0x72cce9,transparent:true,opacity:.13});
+  for(let lat=-60;lat<=60;lat+=30){const pts=[];for(let lon=-180;lon<=180;lon+=4)pts.push(xyz(lat,lon,2.012));grid.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),mat))}
+  for(let lon=-180;lon<180;lon+=30){const pts=[];for(let lat=-90;lat<=90;lat+=3)pts.push(xyz(lat,lon,2.012));grid.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),mat))}
+  globe.add(grid);markerGroup=new THREE.Group();globe.add(markerGroup);
+  const stars=new THREE.BufferGeometry(),positions=[];for(let i=0;i<420;i++){const v=new THREE.Vector3().randomDirection().multiplyScalar(4+Math.random()*7);positions.push(v.x,v.y,v.z)}stars.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));scene.add(new THREE.Points(stars,new THREE.PointsMaterial({color:0xb9eaff,size:.018,transparent:true,opacity:.7})));
+  issDot=makeDot(0xffb16e,.055);markerGroup.add(issDot);
+  function resize(){if(!renderer)return;const w=Math.max(1,canvas.clientWidth),h=Math.max(1,canvas.clientHeight);renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}addEventListener('resize',resize);
+  let drag=false,px=0,rot=0;canvas.addEventListener('pointerdown',e=>{drag=true;px=e.clientX;canvas.setPointerCapture?.(e.pointerId)});canvas.addEventListener('pointerup',()=>drag=false);canvas.addEventListener('pointercancel',()=>drag=false);canvas.addEventListener('pointermove',e=>{if(drag){rot+=(e.clientX-px)*.006;px=e.clientX}});
+  function animate(){requestAnimationFrame(animate);if(!reduced&&!drag)rot+=.0007;globe.rotation.y=rot;const t=performance.now()*.001;issDot.scale.setScalar(1+.2*Math.sin(t*3));renderer.render(scene,camera)}resize();animate();
+ }catch(e){status('3D VIEW UNAVAILABLE · LIVE FEEDS STILL ACTIVE');canvas.style.display='none';}
+ function setMarkers(quakes=[],events=[]){if(!markerGroup)return;for(const m of markerObjects)markerGroup.remove(m);markerObjects.length=0;for(const f of quakes){const c=f.geometry?.coordinates;if(!c)continue;const dot=makeDot(0xff6b86,.025+Math.min(Number(f.properties?.mag||1),7)*.004);dot.position.copy(xyz(c[1],c[0],2.035));markerGroup.add(dot);markerObjects.push(dot)}for(const ev of events){const g=ev.geometry?.[ev.geometry.length-1];if(!g?.coordinates)continue;let coords=g.coordinates;if(g.type==='Polygon'&&Array.isArray(coords?.[0])){const ring=coords[0];coords=[ring.reduce((a,p)=>a+p[0],0)/ring.length,ring.reduce((a,p)=>a+p[1],0)/ring.length]}if(g.type==='Point'&&Array.isArray(coords)){const dot=makeDot(0x8fffd0,.038);dot.position.copy(xyz(coords[1],coords[0],2.04));markerGroup.add(dot);markerObjects.push(dot)}}}
+ const fmtTime=t=>{try{return new Date(t).toLocaleString(undefined,{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})}catch{return 'Time unavailable'}};
+ let quakes=[],events=[],lastSync=null;
+ function renderFeed(){const rows=[];for(const f of quakes.slice(0,12)){const p=f.properties||{},c=f.geometry?.coordinates||[];rows.push({time:p.time||0,title:'M'+Number(p.mag||0).toFixed(1)+' · '+(p.place||'Earthquake'),meta:'USGS · '+fmtTime(p.time)+' · '+(Number(c[2]||0).toFixed(0))+' KM DEPTH',url:p.url})}for(const e of events.slice(0,12)){const g=e.geometry?.[e.geometry.length-1];rows.push({time:Date.parse(g?.date||e.closed||Date.now())||0,title:e.title||'NASA natural event',meta:'NASA EONET · '+(e.categories?.[0]?.title||'NATURAL EVENT')+' · '+fmtTime(g?.date),url:e.link})}rows.sort((a,b)=>b.time-a.time);const box=$('godseyeFeed');box.replaceChildren();if(!rows.length){box.textContent='No event records returned by the feeds yet.';return}for(const row of rows.slice(0,9)){const a=document.createElement('a');a.className='godseye-event';a.href=row.url||'#';a.target='_blank';a.rel='noopener';const b=document.createElement('strong'),sm=document.createElement('small');b.textContent=row.title;sm.textContent=row.meta;a.append(b,sm);box.append(a)}$('godseyeFeedCount').textContent=rows.length+' SIGNALS'}
+ async function loadQuakes(){const r=await fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson',{cache:'no-store'});if(!r.ok)throw Error('USGS '+r.status);const j=await r.json();quakes=(j.features||[]).sort((a,b)=>(b.properties?.time||0)-(a.properties?.time||0));$('godseyeQuakes').textContent=String(j.metadata?.count??quakes.length);renderFeed();setMarkers(quakes,events)}
+ async function loadEvents(){const r=await fetch('https://eonet.gsfc.nasa.gov/api/v3/events?status=open&limit=100',{cache:'no-store'});if(!r.ok)throw Error('NASA '+r.status);const j=await r.json();events=(j.events||[]);$('godseyeEvents').textContent=String(events.length);renderFeed();setMarkers(quakes,events)}
+ async function loadISS(){const r=await fetch('https://api.wheretheiss.at/v1/satellites/25544',{cache:'no-store'});if(!r.ok)throw Error('ISS '+r.status);const iss=await r.json();$('godseyeLat').textContent=Number(iss.latitude).toFixed(2)+'°';$('godseyeLon').textContent=Number(iss.longitude).toFixed(2)+'°';$('godseyeAlt').textContent=Number(iss.altitude).toFixed(0);$('godseyeIssState').textContent=iss.visibility?.toUpperCase()||'TRACKED';if(issDot)issDot.position.copy(xyz(iss.latitude,iss.longitude,2.07))}
+ async function refresh(){status('SYNCING PUBLIC DATA FEEDS');const results=await Promise.allSettled([loadQuakes(),loadEvents(),loadISS()]);const ok=results.filter(x=>x.status==='fulfilled').length;lastSync=new Date();$('godseyeSync').textContent=lastSync.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'});status(ok===3?'3 PUBLIC FEEDS ONLINE':ok+' / 3 PUBLIC FEEDS ONLINE');if(!ok){$('godseyeFeed').textContent='Live sources could not be reached. Check connection and retry.'}}
+ $('godseyeRefresh').addEventListener('click',refresh);
+ refresh();setInterval(loadISS,7000);setInterval(loadQuakes,60000);setInterval(loadEvents,600000);
+ $('godseyeWeatherForm').addEventListener('submit',async e=>{e.preventDefault();const q=$('godseyeCity').value.trim(),out=$('godseyeWeather');if(!q)return;out.textContent='Locating '+q+'…';try{const g=await fetch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(q)+'&count=1&language=en&format=json').then(r=>{if(!r.ok)throw Error('Geocoding unavailable');return r.json()});const place=g.results?.[0];if(!place)throw Error('No matching city found');const w=await fetch('https://api.open-meteo.com/v1/forecast?latitude='+place.latitude+'&longitude='+place.longitude+'&current=temperature_2m,relative_humidity_2m,wind_speed_10m&timezone=auto').then(r=>{if(!r.ok)throw Error('Weather feed unavailable');return r.json()});const c=w.current;if(!c)throw Error('No current weather returned');out.replaceChildren();const b=document.createElement('b');b.textContent=Number(c.temperature_2m).toFixed(1)+'°C';const span=document.createElement('span');span.textContent=place.name+(place.admin1?', '+place.admin1:'')+', '+place.country+' · Humidity '+c.relative_humidity_2m+'% · Wind '+c.wind_speed_10m+' km/h · '+c.time+' local model time';out.append(b,span)}catch(err){out.textContent=err.message||'Weather lookup failed.'}});
+})();
+</script>
+</body></html>
