@@ -11,14 +11,32 @@ try {
   assert.match(await page.title(), /VYRALVERSE/i);
   await page.locator('.hero').waitFor();
   assert.equal(await page.locator('.portal').count(), 6, 'Home should show exactly six original worlds');
+  const duplicateIds = await page.locator('[id]').evaluateAll(nodes => {
+    const seen = new Set(), duplicates = [];
+    for (const node of nodes) { if (seen.has(node.id)) duplicates.push(node.id); seen.add(node.id); }
+    return duplicates;
+  });
+  assert.deepEqual(duplicateIds, [], 'Home must not contain duplicate element IDs');
+  assert.equal(await page.locator('#play').evaluate(el => el.open), false, 'Feature groups should start collapsed for a clean home screen');
 
   await page.locator('#surprise').click();
   await page.locator('#modal.open').waitFor();
+  await page.locator('#dismiss').click();
+  await page.locator('.portal[data-title="Mind Mirror"]').click();
+  await page.locator('input[name="a"][value="curiosity"]').check();
+  await page.locator('input[name="b"][value="logic"]').check();
+  await page.locator('input[name="c"][value="heart"]').check();
+  await page.locator('#mindForm button[type="submit"]').click();
+  await page.locator('#mindResult').getByText('THE FRONTIER SOUL').waitFor();
   await page.locator('#dismiss').click();
 
   await page.locator('[data-open-category="play"]').click();
   assert.equal(await page.locator('#play').evaluate(el => el.open), true);
   await page.locator('#arcadeCanvas').waitFor();
+  assert.equal(await page.locator('#riftStart').count(), 1, 'Single-player rift control must be unique');
+  assert.equal(await page.locator('#roomRiftStart').count(), 1, 'Shared-room rift control must have its own unique ID');
+  assert.equal(await page.locator('#riftStatus').count(), 1);
+  assert.equal(await page.locator('#roomRiftStatus').count(), 1);
 
   await page.locator('[data-open-category="connect"]').click();
   assert.equal(await page.locator('#connect').evaluate(el => el.open), true);
@@ -32,6 +50,10 @@ try {
   assert.equal(await page.locator('#canvas .canvas-section').count(), initial, 'Undo should remove the added section');
   await page.locator('#redo').click();
   assert.equal(await page.locator('#canvas .canvas-section').count(), initial + 1, 'Redo should restore the section');
+  const firstBeforeDrag = await page.locator('#canvas .canvas-section').first().locator('h1,h2').first().textContent();
+  await page.locator('[data-add="button"]').dragTo(page.locator('#canvas .canvas-section').first());
+  assert.equal(await page.locator('#canvas .canvas-section').count(), initial + 2, 'Dragging a palette block onto a section should add one block');
+  assert.equal(await page.locator('#canvas .canvas-section').first().locator('h1,h2').first().textContent(), firstBeforeDrag, 'Palette drop must not reorder an existing section');
   const [download] = await Promise.all([
     page.waitForEvent('download'),
     page.locator('#exportHtml').click()
@@ -46,7 +68,7 @@ try {
   assert.equal(await page.frameLocator('#preview').locator('#smoke-check').textContent(), 'NEXUS PREVIEW WORKS');
 
   if (pageErrors.length) throw new Error('Browser runtime errors: ' + pageErrors.join(' | '));
-  console.log('PASS: homepage, Surprise Me, category navigation, Visual Builder add/undo/redo/export, Code Studio live preview.');
+  console.log('PASS: homepage, Surprise Me, category navigation, portal mini-experience, category navigation, unique room controls, Visual Builder add/undo/redo/drag/export, Code Studio live preview.');
 } finally {
   await browser.close();
 }
