@@ -177,15 +177,27 @@ try {
   assert.equal(await studioFrame.locator('#tasks li').count(), 1, 'Focus Board should create a task');
   await studioFrame.locator('#tasks li input[type="checkbox"]').click();
   assert.equal(await studioFrame.locator('#tasks li').getAttribute('class'), 'done');
+  await page.waitForFunction(() => JSON.parse(localStorage.getItem('vv-nexus-preview-storage') || '{}')['focus-board-tasks'] !== undefined);
+  await page.locator('#run').click();
+  await studioFrame.locator('#tasks li').waitFor();
+  assert.equal(await studioFrame.locator('#tasks li').getAttribute('class'), 'done', 'Sandbox storage bridge should preserve tasks between previews');
+  await page.locator('#save').click();
+  await page.reload();
+  await studioFrame.locator('#tasks li').waitFor();
+  assert.equal(await studioFrame.locator('#tasks li').count(), 1, 'Focus Board tasks should survive a workspace reload');
   await studioFrame.locator('#tasks li button.remove').click();
   assert.equal(await studioFrame.locator('#tasks li').count(), 0);
 
+  await page.evaluate(() => { const data = JSON.parse(localStorage.getItem('vv-nexus-preview-storage') || '{}'); data['star-catcher-best'] = '120'; localStorage.setItem('vv-nexus-preview-storage', JSON.stringify(data)); });
   await page.locator('[data-template="game"]').click();
   await studioFrame.locator('#arena').waitFor();
+  assert.equal(await studioFrame.locator('#best').textContent(), '120', 'Star Catcher should restore its saved best score');
   await studioFrame.locator('#start').click();
   await page.waitForTimeout(120);
   await studioFrame.locator('#start').click(); // Restart must not throw or retain old game state.
   await page.locator('#htmlCode').fill('<h1 id="smoke-check">NEXUS PREVIEW WORKS</h1>');
+  await page.locator('#cssCode').fill('');
+  await page.locator('#jsCode').fill('');
   await page.locator('#run').click();
   await page.frameLocator('#preview').locator('#smoke-check').waitFor();
   assert.equal(await page.frameLocator('#preview').locator('#smoke-check').textContent(), 'NEXUS PREVIEW WORKS');
@@ -208,6 +220,11 @@ try {
   });
   await page.locator('#run').click();
   await page.frameLocator('#preview').locator('#import-check').waitFor();
+  const [previewTab] = await Promise.all([page.waitForEvent('popup'), page.locator('#openPreview').click()]);
+  await previewTab.locator('iframe#preview').waitFor();
+  assert.equal(await previewTab.locator('iframe#preview').getAttribute('sandbox'), 'allow-scripts allow-forms', 'Opened preview must remain sandboxed');
+  await previewTab.frameLocator('#preview').locator('#import-check').waitFor();
+  await previewTab.close();
   page.once('dialog', dialog => dialog.accept());
   await page.locator('#reset').click();
   assert.match(await page.locator('#htmlCode').inputValue(), /Hello, <span>creator\.<\/span>/, 'Reset should restore the starter HTML');
