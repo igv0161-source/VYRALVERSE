@@ -199,6 +199,11 @@ try {
   });
   await page.locator('#run').click();
   await page.frameLocator('#preview').locator('#import-check').waitFor();
+  page.once('dialog', dialog => dialog.accept());
+  await page.locator('#reset').click();
+  assert.match(await page.locator('#htmlCode').inputValue(), /Hello, <span>creator\.<\/span>/, 'Reset should restore the starter HTML');
+  await page.reload();
+  assert.match(await page.locator('#htmlCode').inputValue(), /Hello, <span>creator\.<\/span>/, 'Reset should clear the old saved project');
 
   if (pageErrors.length || consoleErrors.length) {
     throw new Error('Browser errors: ' + [...pageErrors, ...consoleErrors].join(' | '));
