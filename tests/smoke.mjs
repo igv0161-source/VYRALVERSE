@@ -23,6 +23,9 @@ try {
     return duplicates;
   });
   assert.deepEqual(duplicateIds, [], 'Home must not contain duplicate element IDs');
+  await page.setViewportSize({ width: 390, height: 844 });
+  assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'Entry screen must fit a mobile viewport');
+  await page.setViewportSize({ width: 1365, height: 900 });
 
   await page.locator('#surprise').click();
   await page.locator('#modal.open').waitFor();
@@ -86,6 +89,16 @@ try {
   // Navigation must open the correct collapsed feature group.
   await page.locator('[data-open-category="connect"]').click();
   assert.equal(await page.locator('#connect').evaluate(el => el.open), true);
+  for (const target of ['top', 'portals', 'play', 'create', 'connect', 'discover']) {
+    await page.locator('.vv-tab[data-target="' + target + '"]').click();
+    if (['play', 'connect', 'discover'].includes(target)) {
+      assert.equal(await page.locator('#' + target).evaluate(el => el.open), true, target + ' dock item should open its feature group');
+    }
+  }
+  await page.locator('.vv-tab[data-target="profile"]').click();
+  assert.equal(await page.locator('#accountModal').evaluate(el => el.classList.contains('open')), true, 'Profile dock item should open account identity');
+  await page.locator('#accountClose').click();
+  await page.locator('[data-open-category="connect"]').click();
   await page.locator('#discussionMessages .discussion-empty').waitFor({ timeout: 15000 });
   await page.locator('#communityFeed').getByText('No public creations yet').waitFor({ timeout: 15000 });
   assert.equal(await page.locator('#roomTitle').isDisabled(), true, 'Private rooms must require an authenticated explorer');
@@ -135,6 +148,9 @@ try {
   await page.locator('#status').getByText('PROJECT IMPORTED').waitFor();
   assert.equal(await page.locator('#canvas a').getAttribute('href'), '#', 'Unsafe imported links must be neutralized');
   await page.locator('#saveLocal').click();
+  await page.reload();
+  assert.equal(await page.locator('#projectTitle').inputValue(), 'Import safety check', 'Visual Builder local project should restore after reload');
+  assert.equal(await page.locator('#canvas a').getAttribute('href'), '#', 'Restored local project must retain sanitized links');
   await page.locator('#cloudSave').click();
   assert.equal(await page.locator('#authOverlay').evaluate(el => el.classList.contains('open')), true, 'Cloud save must request real authentication');
   await page.locator('#authClose').click();
@@ -166,6 +182,8 @@ try {
 
   await page.locator('#save').click();
   await page.locator('#saveState').getByText('SAVED LOCALLY').waitFor();
+  await page.reload();
+  assert.equal(await page.locator('#htmlCode').inputValue(), '<h1 id="smoke-check">NEXUS PREVIEW WORKS</h1>', 'Code Studio source should restore after reload');
   const [jsonDownload] = await Promise.all([
     page.waitForEvent('download'),
     page.locator('#exportProject').click()
