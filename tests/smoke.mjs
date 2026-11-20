@@ -38,6 +38,38 @@ try {
   await page.locator('#mindForm button.play-button').click();
   await page.locator('#mindResult').getByText('THE FRONTIER SOUL').waitFor();
   await page.locator('#dismiss').click();
+
+  await page.locator('.portal[data-title="Roast Reactor"]').click();
+  await page.locator('#roastName').fill('Smoke Tester');
+  await page.locator('#roastGo').click();
+  await page.locator('#roastResult').getByText('Smoke Tester,').waitFor();
+  await page.locator('#dismiss').click();
+
+  await page.locator('.portal[data-title="Future Frame"]').click();
+  await page.locator('#futureGoal').fill('Build a kinder and more creative future');
+  await page.locator('#futureGo').click();
+  await page.locator('#futureResult').getByText('LOCAL CONCEPT DRAFT').waitFor();
+  await page.locator('#dismiss').click();
+
+  await page.locator('.portal[data-title="Mystery Drop"]').click();
+  await page.locator('#riddleHint').click();
+  await page.locator('#riddleResult').getByText('fold me').waitFor();
+  await page.locator('#riddleAnswer').fill('map');
+  await page.locator('#riddleGo').click();
+  await page.locator('#riddleResult').getByText('CORRECT').waitFor();
+  await page.locator('#dismiss').click();
+
+  await page.locator('.portal[data-title="Dream Studio"]').click();
+  await page.locator('#dreamIdea').fill('A floating garden above a quiet ocean');
+  await page.locator('#dreamGo').click();
+  await page.locator('#dreamResult').getByText('YOUR CONCEPT SEED').waitFor();
+  await page.locator('#dismiss').click();
+
+  await page.locator('.portal[data-title="Friend Quests"]').click();
+  await page.locator('#questGo').click();
+  await page.locator('#questResult button').getByText('SHARE QUEST').waitFor();
+  await page.locator('#dismiss').click();
+
   await page.locator('[data-open-category="play"]').click();
   await page.locator('#answer').fill('ORBIT');
   await page.locator('#answerForm button').click();
@@ -54,6 +86,10 @@ try {
   // Navigation must open the correct collapsed feature group.
   await page.locator('[data-open-category="connect"]').click();
   assert.equal(await page.locator('#connect').evaluate(el => el.open), true);
+  await page.locator('#discussionMessages .discussion-empty').waitFor({ timeout: 15000 });
+  await page.locator('#communityFeed').getByText('No public creations yet').waitFor({ timeout: 15000 });
+  assert.equal(await page.locator('#roomTitle').isDisabled(), true, 'Private rooms must require an authenticated explorer');
+  assert.equal(await page.locator('#discussionInput').isDisabled(), true, 'Posting to public chat must require authentication');
   await page.locator('#commandLauncher').click();
   await page.locator('#commandSearch').fill('GODSEYE');
   await page.locator('.command-item').first().click();
