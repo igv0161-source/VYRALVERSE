@@ -112,9 +112,18 @@ try {
   assert.ok(Number(await page.locator('#godseyeQuakes').textContent()) > 0, 'USGS feed should return real earthquake records');
   assert.ok(Number(await page.locator('#godseyeEvents').textContent()) > 0, 'GDACS feed should return real disaster records');
   assert.notEqual(await page.locator('#godseyeLat').textContent(), '—', 'ISS position should load');
+  // Keep the UI test deterministic: live public APIs are checked separately and may rate-limit CI.
+  await page.route('https://geocoding-api.open-meteo.com/**', route => route.fulfill({
+    status: 200, contentType: 'application/json',
+    body: JSON.stringify({ results: [{ name: 'Pune', admin1: 'Maharashtra', country: 'India', latitude: 18.52, longitude: 73.85 }] })
+  }));
+  await page.route('https://api.open-meteo.com/v1/forecast**', route => route.fulfill({
+    status: 200, contentType: 'application/json',
+    body: JSON.stringify({ current: { temperature_2m: 28.4, relative_humidity_2m: 52, wind_speed_10m: 8.2, time: '2026-11-20T11:00' } })
+  }));
   await page.locator('#godseyeCity').fill('Pune');
   await page.locator('#godseyeWeatherForm button').click();
-  await page.waitForFunction(() => document.getElementById('godseyeWeather')?.textContent.includes('°C'), null, { timeout: 30000 });
+  await page.locator('#godseyeWeather').getByText('28.4°C').waitFor({ timeout: 10000 });
 
   // Visual Builder: add/edit history, palette drag/drop, safe project import, exports and auth gate.
   await page.goto(`${baseUrl}/nexus-visual-builder.html`, { waitUntil: 'domcontentloaded' });
