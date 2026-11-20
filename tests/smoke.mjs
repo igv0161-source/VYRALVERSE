@@ -94,7 +94,7 @@ try {
   await page.locator('#commandSearch').fill('GODSEYE');
   await page.locator('.command-item').first().click();
   assert.equal(await page.locator('#discover').evaluate(el => el.open), true, 'Command deck should open Discover before navigating');
-  await page.waitForFunction(() => !document.getElementById('godseyeStatus')?.textContent.includes('CONNECTING'), null, { timeout: 20000 });
+  await page.waitForFunction(() => { const t = document.getElementById('godseyeStatus')?.textContent || ''; return !t.includes('CONNECTING') && !t.includes('SYNCING'); }, null, { timeout: 25000 });
   assert.ok(Number(await page.locator('#godseyeQuakes').textContent()) > 0, 'USGS feed should return real earthquake records');
   assert.ok(Number(await page.locator('#godseyeEvents').textContent()) > 0, 'GDACS feed should return real disaster records');
   assert.notEqual(await page.locator('#godseyeLat').textContent(), '—', 'ISS position should load');
