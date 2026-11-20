@@ -14,6 +14,7 @@ create table if not exists public.studio_projects (
 create index if not exists studio_projects_owner_updated_idx
   on public.studio_projects (user_id, updated_at desc);
 alter table public.studio_projects enable row level security;
+revoke all privileges on table public.studio_projects from anon;
 grant select, insert, update, delete on public.studio_projects to authenticated;
 drop policy if exists "Users read their own studio projects" on public.studio_projects;
 create policy "Users read their own studio projects"
