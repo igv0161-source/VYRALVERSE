@@ -1,6 +1,7 @@
 import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
 
+const baseUrl = process.env.BASE_URL || 'http://127.0.0.1:4173';
 const browser = await chromium.launch({ headless: true });
 const page = await browser.newPage({ viewport: { width: 1365, height: 900 } });
 const pageErrors = [];
@@ -12,7 +13,7 @@ page.on('console', message => {
 
 try {
   // Clean entry screen, original worlds and the gated experience.
-  await page.goto('http://127.0.0.1:4173/', { waitUntil: 'domcontentloaded' });
+  await page.goto(`${baseUrl}/', { waitUntil: 'domcontentloaded' });
   assert.match(await page.title(), /VYRALVERSE/i);
   await page.locator('body.ready').waitFor({ timeout: 15000 });
   assert.equal(await page.locator('.portal').count(), 6, 'Home should show exactly six original worlds');
@@ -116,7 +117,7 @@ try {
   await page.waitForFunction(() => document.getElementById('godseyeWeather')?.textContent.includes('°C'), null, { timeout: 30000 });
 
   // Visual Builder: add/edit history, palette drag/drop, safe project import, exports and auth gate.
-  await page.goto('http://127.0.0.1:4173/nexus-visual-builder.html', { waitUntil: 'domcontentloaded' });
+  await page.goto(`${baseUrl}/nexus-visual-builder.html', { waitUntil: 'domcontentloaded' });
   await page.locator('#canvas .canvas-section').first().waitFor();
   const initial = await page.locator('#canvas .canvas-section').count();
   await page.locator('[data-add="text"]').click();
@@ -158,7 +159,7 @@ try {
   assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'Visual Builder must not overflow mobile width');
 
   // NEXUS Code Studio: real mini-app form, game restart, sandbox preview, import/export and local save.
-  await page.goto('http://127.0.0.1:4173/nexus-studio.html', { waitUntil: 'domcontentloaded' });
+  await page.goto(`${baseUrl}/nexus-studio.html', { waitUntil: 'domcontentloaded' });
   assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'Code Studio header must fit mobile width');
   await page.locator('[data-template="app"]').click();
   const studioFrame = page.frameLocator('#preview');
