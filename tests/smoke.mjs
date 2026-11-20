@@ -196,8 +196,8 @@ try {
   await page.waitForTimeout(120);
   await studioFrame.locator('#start').click(); // Restart must not throw or retain old game state.
   await page.locator('#htmlCode').fill('<h1 id="smoke-check">NEXUS PREVIEW WORKS</h1>');
-  await page.locator('#cssCode').fill('');
-  await page.locator('#jsCode').fill('');
+  await page.locator('#cssCode').evaluate(el => { el.value = ''; el.dispatchEvent(new Event('input', { bubbles: true })); });
+  await page.locator('#jsCode').evaluate(el => { el.value = ''; el.dispatchEvent(new Event('input', { bubbles: true })); });
   await page.locator('#run').click();
   await page.frameLocator('#preview').locator('#smoke-check').waitFor();
   assert.equal(await page.frameLocator('#preview').locator('#smoke-check').textContent(), 'NEXUS PREVIEW WORKS');
