@@ -11,13 +11,14 @@ Source: https://github.com/igv0161-source/VYRALVERSE
 - NEXUS VISUAL BUILDER: drag-and-drop page sections, editable content and styling, desktop/tablet/mobile preview, undo/redo, standalone HTML export and portable JSON projects.
 - Command deck navigation opens collapsed feature groups before jumping to a destination.
 - Supabase Auth-backed private cloud project storage for Visual Builder projects.
-- Existing explorer identity, XP, leaderboard, rooms and realtime community features remain in the main experience.
+- Existing explorer identity, XP, daily anomaly, leaderboard, invite-only rooms, friend quests and realtime community features remain in the main experience.
+- GODSEYE uses live USGS earthquake records, GDACS global disaster alerts, ISS telemetry and Open-Meteo city weather. NASA EONET was returning HTTP 500 during verification, so the working GDACS public feed replaced it.
 
 ## Frontend
 The site is currently a lightweight static HTML/CSS/JavaScript project served by Cloudflare Pages. The Supabase publishable key is intentionally used in browser code; it is designed for public clients and is protected by database Row Level Security. Never put a Supabase secret or service-role key in this repository.
 
 ## Automated checks
-A GitHub Actions Playwright smoke test runs on pushes and pull requests. It checks the entry gate, original worlds, portal mini-experience, feature navigation, unique room controls, Visual Builder editing/drag/drop/export and Code Studio live preview. Authenticated account and realtime room end-to-end tests require a dedicated test account and are not included in the anonymous browser smoke run.
+A GitHub Actions Playwright smoke test runs on pushes and pull requests. It checks all six worlds, the daily puzzle, account/recovery UI, feature and dock navigation, guest-safe community controls, live USGS/GDACS/ISS feeds, Open-Meteo weather, Visual Builder editing/undo/redo/drag/drop/import safety/export/local restore/auth gate/mobile layout, and Code Studio mini-app/game/preview/JSON import-export/local restore/reset. The same suite was also run successfully against the live Cloudflare Pages site using `BASE_URL=https://vyralverse.pages.dev`. Authenticated account, private cloud saves and realtime room end-to-end tests still require a dedicated test account and are not included in the anonymous browser smoke run.
 
 ## Backend
 Supabase project: `lrkntokhyyufgtwoeisw` (Asia Pacific — Mumbai).
