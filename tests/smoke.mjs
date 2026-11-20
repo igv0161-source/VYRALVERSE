@@ -36,9 +36,9 @@ try {
 
   // A real portal experience and today's seeded daily puzzle.
   await page.locator('.portal[data-title="Mind Mirror"]').click();
-  await page.locator('input[name="a"][value="curiosity"]').check();
-  await page.locator('input[name="b"][value="logic"]').check();
-  await page.locator('input[name="c"][value="heart"]').check();
+  await page.locator('input[name="a"][value="curiosity"]').click();
+  await page.locator('input[name="b"][value="logic"]').click();
+  await page.locator('input[name="c"][value="heart"]').click();
   await page.locator('#mindForm button.play-button').click();
   await page.locator('#mindResult').getByText('THE FRONTIER SOUL').waitFor();
   await page.locator('#dismiss').click();
@@ -166,7 +166,7 @@ try {
   await studioFrame.locator('#taskInput').fill('Smoke test task');
   await studioFrame.locator('#taskForm button').click();
   assert.equal(await studioFrame.locator('#tasks li').count(), 1, 'Focus Board should create a task');
-  await studioFrame.locator('#tasks li input[type="checkbox"]').check();
+  await studioFrame.locator('#tasks li input[type="checkbox"]').click();
   assert.equal(await studioFrame.locator('#tasks li').getAttribute('class'), 'done');
   await studioFrame.locator('#tasks li button.remove').click();
   assert.equal(await studioFrame.locator('#tasks li').count(), 0);
