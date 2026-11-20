@@ -218,6 +218,7 @@ try {
       files: { html: '<h1 id="import-check">Imported project works</h1>', css: '', js: '' }
     }))
   });
+  await page.waitForFunction(() => document.getElementById('htmlCode')?.value.includes('import-check'));
   await page.locator('#run').click();
   await page.frameLocator('#preview').locator('#import-check').waitFor();
   const [previewTab] = await Promise.all([page.waitForEvent('popup'), page.locator('#openPreview').click()]);
