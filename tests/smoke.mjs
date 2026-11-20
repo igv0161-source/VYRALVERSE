@@ -228,6 +228,7 @@ try {
   await previewTab.close();
   page.once('dialog', dialog => dialog.accept());
   await page.locator('#reset').click();
+  assert.equal(await page.evaluate(() => localStorage.getItem('vv-nexus-preview-storage')), null, 'Reset should clear sandboxed preview data');
   assert.match(await page.locator('#htmlCode').inputValue(), /Hello, <span>creator\.<\/span>/, 'Reset should restore the starter HTML');
   await page.reload();
   assert.match(await page.locator('#htmlCode').inputValue(), /Hello, <span>creator\.<\/span>/, 'Reset should clear the old saved project');
