@@ -15,12 +15,25 @@ function clearEntityRecords(list){if(viewer)list.forEach(function(item){var enti
 function fly(lat,lon,height){viewer.camera.flyTo({destination:Cesium.Cartesian3.fromDegrees(lon,lat,height||45000),duration:2.2});}
 function selectedLocation(lat,lon,name){selectedPlace={lat:lat,lon:lon,name:name||"Selected location"};$("weather").textContent="Loading current weather for "+selectedPlace.name+"…";loadWeather(lat,lon,name)}
 function buildViewer(){
-if(!window.Cesium){toast("CesiumJS failed to load. Check your connection.");return}
-viewer=new Cesium.Viewer("globe",{animation:false,timeline:false,baseLayerPicker:false,geocoder:false,homeButton:false,sceneModePicker:false,navigationHelpButton:false,fullscreenButton:true,infoBox:true,selectionIndicator:true,sceneMode:Cesium.SceneMode.SCENE3D,terrainProvider:new Cesium.EllipsoidTerrainProvider(),imageryProvider:new Cesium.UrlTemplateImageryProvider({url:"https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",maximumLevel:19,credit:"Tiles © Esri — Source: Esri, Maxar, Earthstar Geographics, and the GIS User Community"})});
-viewer.scene.globe.enableLighting=true;viewer.scene.globe.depthTestAgainstTerrain=false;viewer.scene.screenSpaceCameraController.minimumZoomDistance=100;viewer.scene.screenSpaceCameraController.maximumZoomDistance=35000000;
+if(!window.Cesium){toast("CesiumJS failed to load. Check your connection.");setSource("CesiumJS","UNAVAILABLE","The 3D map engine did not load.");return}
+viewer=new Cesium.Viewer("globe",{animation:false,timeline:false,baseLayer:false,baseLayerPicker:false,geocoder:false,homeButton:false,sceneModePicker:false,navigationHelpButton:false,fullscreenButton:true,infoBox:true,selectionIndicator:true,sceneMode:Cesium.SceneMode.SCENE3D,terrainProvider:new Cesium.EllipsoidTerrainProvider()});
+viewer.scene.globe.enableLighting=true;viewer.scene.globe.depthTestAgainstTerrain=false;viewer.scene.globe.baseColor=Cesium.Color.fromCssColorString("#071522");viewer.scene.screenSpaceCameraController.minimumZoomDistance=100;viewer.scene.screenSpaceCameraController.maximumZoomDistance=35000000;
 viewer.camera.setView({destination:Cesium.Cartesian3.fromDegrees(12,18,26000000)});
 viewer.selectedEntityChanged.addEventListener(function(entity){if(entity&&entity.properties&&entity.properties.cameraId){var id=entity.properties.cameraId.getValue();var camera=cameras.find(function(c){return c.id===id});if(camera)showCamera(camera)}if(entity&&entity.properties&&entity.properties.streetPhotoId){var photoId=entity.properties.streetPhotoId.getValue();var photo=streetPhotos.find(function(p){return p.id===photoId});if(photo)showStreetPhoto(photo)}});
-setSource("Esri World Imagery","AVAILABLE","Satellite imagery service");
+setSource("Esri World Imagery","LOADING","Connecting to the official ArcGIS World Imagery MapServer…");
+Cesium.ArcGisMapServerImageryProvider.fromUrl("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer").then(function(provider){
+if(!viewer||viewer.isDestroyed())return;
+viewer.imageryLayers.addImageryProvider(provider);
+setSource("Esri World Imagery","AVAILABLE","Satellite and aerial imagery layer loaded from Esri.");
+}).catch(function(error){
+console.error("Esri imagery provider failed",error);
+if(!viewer||viewer.isDestroyed())return;
+try{
+var fallback=new Cesium.UrlTemplateImageryProvider({url:"https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",maximumLevel:19,credit:"Tiles © Esri"});
+viewer.imageryLayers.addImageryProvider(fallback);
+setSource("Esri World Imagery","DEGRADED","Using direct Esri tile fallback; check tile availability if the globe remains blank.");
+}catch(fallbackError){console.error("Esri imagery fallback failed",fallbackError);setSource("Esri World Imagery","UNAVAILABLE","Imagery could not be initialized. Check network access and browser console.");toast("Satellite imagery could not load. Please refresh or check your connection.")}
+});
 setSource("Photon city search","READY","Open-source place geocoder");
 }
 function searchPlace(query){
