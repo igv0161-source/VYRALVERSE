@@ -32,12 +32,12 @@ body{display:flex;flex-direction:column}.top{height:64px;flex:0 0 64px;display:f
 #weather{font-size:12px;line-height:1.7;color:#d7e8f4}#cameraCard{display:none}#cameraMedia{width:100%;max-height:190px;object-fit:contain;background:#02060a;border-radius:8px;margin-top:8px}#cameraCard p{font-size:11px;color:var(--muted);line-height:1.5}
 .smallbtn{font-size:10px;padding:7px 9px}.disclaimer{font-size:10px;color:#8296a9;line-height:1.6;margin:16px 2px}.footer{font-size:10px;color:#71869a;line-height:1.7}.footer a{color:#9fdcf0}
 #toast{position:absolute;z-index:8;bottom:42px;left:50%;transform:translateX(-50%);background:#091522ed;border:1px solid #35536b;border-radius:9px;padding:10px 14px;font-size:12px;color:#eafaff;display:none;max-width:90%;text-align:center}
-@media(max-width:850px){.layout{grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) 42vh}.side{border-left:0;border-top:1px solid var(--line);padding:14px 14px 28px}.maptools{top:78px}.searchbar{top:12px}.top{height:56px;flex-basis:56px;padding:0 14px}.tag{display:none}.liveflag{font-size:9px}.mapcredit{font-size:9px}}
+@media(max-width:850px){.top{gap:10px}.top a{font-size:10px}.layout{grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) 42vh}.side{border-left:0;border-top:1px solid var(--line);padding:14px 14px 28px}.maptools{top:78px}.searchbar{top:12px}.top{height:56px;flex-basis:56px;padding:0 14px}.tag{display:none}.liveflag{font-size:9px}.mapcredit{font-size:9px}}
 @media(max-width:480px){.layout{grid-template-rows:minmax(0,1fr) 44vh}.brand{font-size:12px}.top a{font-size:10px}.maptools{gap:5px}.chip{padding:8px 9px;font-size:9px}.side h1{font-size:18px}}
 </style>
 </head>
 <body>
-<header class="top"><div class="brand">VYRALVERSE <em>/ GODSEYE</em></div><div class="tag">GLOBAL PUBLIC-DATA EXPLORER</div><div class="liveflag">REAL SOURCES · NO SIMULATED TRACKS</div><a href="../index.html">← VYRALVERSE</a></header>
+<header class="top"><div class="brand">VYRALVERSE <em>/ GODSEYE</em></div><div class="tag">GLOBAL PUBLIC-DATA EXPLORER</div><div class="liveflag">REAL SOURCES · NO SIMULATED TRACKS</div><a href="https://github.com/bilawalsidhu/gods-eye-view" target="_blank" rel="noopener noreferrer">ORIGINAL OPEN-SOURCE PROJECT ↗</a><a href="https://godseyeview.ai/online/" target="_blank" rel="noopener noreferrer">OFFICIAL HOSTED VERSION / WAITLIST ↗</a><a href="../index.html">← VYRALVERSE</a></header>
 <main class="layout">
 <section class="mapwrap" aria-label="Interactive real-world globe">
 <div id="globe"></div>
