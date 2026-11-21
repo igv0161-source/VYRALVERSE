@@ -80,6 +80,18 @@ try {
   await page.locator('[data-open-category="play"]').click();
   await page.locator('#hintButton').click();
   await page.locator('#signalHint').getByText('Shift each letter three places backward.').waitFor();
+  // The shareable identity ritual must produce a real result and downloadable card.
+  await page.locator('#verseOptions button').first().click();
+  await page.locator('#verseOptions button').first().click();
+  await page.locator('#verseOptions button').first().click();
+  await page.locator('#verseOptions button').first().click();
+  await page.locator('#verseResult:not([hidden])').waitFor();
+  assert.match(await page.locator('#verseArchetype').innerText(), /THE /);
+  assert.match(await page.locator('#verseCode').innerText(), /^VV-/);
+  await page.locator('#verseName').fill('Smoke Tester');
+  assert.equal(await page.locator('#verseDownload').count(), 1, 'Verse ID must offer a downloadable identity card');
+  await page.locator('#verseAgain').click();
+  assert.equal(await page.locator('#verseQuestionWrap').isVisible(), true, 'Verse ID quiz must be replayable');
 
   // Account and recovery UI must open without pretending the visitor is signed in.
   await page.locator('#accountButton').click();
@@ -254,7 +266,7 @@ try {
   await godseyePage.locator('#launchesToggle').check();
   assert.match(await godseyePage.locator('#launchList').innerText(), /Launch Library 2/);
   await godseyePage.locator('#cyclonesToggle').check();
-  assert.match(await godseyePage.locator('#cycloneList').innerText(), /GDACS cyclone data cannot be plotted/);
+  await godseyePage.locator('#cycloneList').getByText(/GDACS cyclone data cannot be plotted/).waitFor({ timeout: 5000 });
   assert.doesNotMatch(await godseyePage.locator('body').innerText(), /Your AISStream API key/);
   assert.match(await godseyePage.locator('.disclaimer').innerText(), /No private camera access/);
   assert.ok(await godseyePage.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'GODSEYE must fit a mobile viewport');
