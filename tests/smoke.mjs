@@ -250,7 +250,7 @@ try {
   await godseyePage.locator('#shipsToggle').check();
   await godseyePage.locator('#sourceStatus').getByText(/UNAVAILABLE/).waitFor();
   await godseyePage.locator('#launchesToggle').check();
-  assert.match(await godseyePage.locator('#sourceStatus').innerText(), /Launch Library 2/);
+  assert.match(await godseyePage.locator('#launchList').innerText(), /Launch Library 2/);
   assert.doesNotMatch(await godseyePage.locator('body').innerText(), /Your AISStream API key/);
   assert.match(await godseyePage.locator('.disclaimer').innerText(), /No private camera access/);
   assert.ok(await godseyePage.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'GODSEYE must fit a mobile viewport');
