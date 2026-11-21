@@ -46,12 +46,13 @@ jobs:
             fi
             sleep 10
           done
-          if [ "$live_ok" -eq 1 ] && curl -fsSL --max-time 20 https://vyralverse.pages.dev/nexus-visual-builder.html -o /tmp/vyralverse-builder.html && grep -q "NEXUS VISUAL BUILDER" /tmp/vyralverse-builder.html && curl -fsSL --max-time 20 https://vyralverse.pages.dev/godseye/index.html -o /tmp/vyralverse-godseye.html && grep -q "GODSEYE" /tmp/vyralverse-godseye.html && curl -fsSL --max-time 20 https://vyralverse.pages.dev/godseye/app.js -o /tmp/vyralverse-godseye.js && grep -q "api.kartaview.org/2.0/photo/" /tmp/vyralverse-godseye.js; then
+          if [ "$live_ok" -eq 1 ] && curl -fsSL --max-time 20 https://vyralverse.pages.dev/nexus-visual-builder.html -o /tmp/vyralverse-builder.html && grep -q "NEXUS VISUAL BUILDER" /tmp/vyralverse-builder.html && curl -fsSL --max-time 20 https://vyralverse.pages.dev/godseye/index.html -o /tmp/vyralverse-godseye.html && grep -q "GODSEYE" /tmp/vyralverse-godseye.html && curl -fsSL --max-time 20 https://vyralverse.pages.dev/godseye/app.js -o /tmp/vyralverse-godseye.js && grep -q "api.kartaview.org/2.0/photo/" /tmp/vyralverse-godseye.js && grep -q "celestrak.org/NORAD/elements/gp.php" /tmp/vyralverse-godseye.js && ! grep -q "wss://stream.aisstream.io" /tmp/vyralverse-godseye.js && curl -fsSL --max-time 20 https://vyralverse.pages.dev/godseye/tallinn-cameras.json -o /tmp/vyralverse-tallinn-cameras.json && grep -q "City of Tallinn" /tmp/vyralverse-tallinn-cameras.json; then
             adsb_status=$(curl -sS --max-time 20 -o /tmp/vyralverse-adsb-check.json -w '%{http_code}' 'https://vyralverse.pages.dev/api/adsb?lat=999&lon=0')
-            if [ "$adsb_status" = "400" ]; then
-              echo "Cloudflare Pages serves the homepage, Visual Builder, GODSEYE assets and ADS-B function validation."
+            vessels_status=$(curl -sS --max-time 20 -o /tmp/vyralverse-vessels-check.json -w '%{http_code}' 'https://vyralverse.pages.dev/api/vessels?lat=0&lon=0')
+            if [ "$adsb_status" = "400" ] && { [ "$vessels_status" = "200" ] || [ "$vessels_status" = "503" ]; } && grep -q "AISStream" /tmp/vyralverse-vessels-check.json; then
+              echo "Cloudflare Pages serves the homepage, Visual Builder, GODSEYE, satellite/camera data, ADS-B validation and secure AIS proxy health endpoint (HTTP $vessels_status)."
             else
-              echo "::warning::GODSEYE assets are live, but ADS-B Pages Function validation returned HTTP $adsb_status."
+              echo "::warning::GODSEYE assets are live, but one or more data function checks failed (ADS-B $adsb_status, AIS $vessels_status)."
             fi
           else
             echo "::warning::Cloudflare Pages GODSEYE deployment is not yet verified or is still deploying. GitHub source checks remain separate."
