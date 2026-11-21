@@ -42,3 +42,16 @@ VYRALVERSE's GODSEYE page is an independent integration inspired by, and selecti
 - Official hosted-version information: https://godseyeview.ai/online/
 
 The original MIT license covers its source code, not its third-party datasets, imagery, API services or trademark. This integration does not copy upstream bundled datasets or claim rights to those assets. Always follow the current per-provider terms and attribution.
+
+## Global tropical cyclone layer (GDACS)
+
+The **Global tropical cyclones** layer uses the public GDACS GeoJSON feed through the same-origin Cloudflare Pages Function at `/api/cyclones`.
+
+- Source feed: `https://www.gdacs.org/contentdata/xml/gdacsTC.geojson`
+- GDACS combines tropical-cyclone bulletins from NOAA and JTWC for worldwide coverage; the GDACS analysis also uses additional rainfall and storm-surge inputs. This layer plots only geometries supplied by the feed. It does not invent a forecast track or cone.
+- The Pages Function validates the GeoJSON FeatureCollection, enforces a 12 MiB response limit, uses a 20-second upstream timeout, and caches successful responses at the edge for 15 minutes.
+- Data is provided by the Global Disaster Awareness and Coordination System (GDACS), European Commission Joint Research Centre. Reuse is allowed under the European Union CC BY 4.0 notice for the event data; provide attribution to GDACS.
+- Storm tracks/impact geometries may be delayed or absent. This is an informational public-data layer, not an official warning, forecast, navigation or emergency-response system.
+- API quick start: https://www.gdacs.org/Documents/2025/GDACS_API_quickstart_v2.pdf
+- GDACS cyclone methodology: https://data.gdacs.org/Knowledge/models_tc.aspx
+
