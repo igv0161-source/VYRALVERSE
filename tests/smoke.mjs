@@ -241,10 +241,12 @@ try {
   await godseyePage.route('https://cesium.com/**', route => route.abort());
   await godseyePage.goto(`${baseUrl}/godseye/index.html`, { waitUntil: 'domcontentloaded' });
   assert.match(await godseyePage.title(), /GODSEYE.*Global Explorer/i);
-  for (const id of ['globe','searchForm','placeSearch','homeView','myLocation','refresh','flightsToggle','quakesToggle','issToggle','satellitesToggle','shipsToggle','connectShips','camerasToggle','streetToggle','weather','sourceStatus']) {
+  for (const id of ['globe','searchForm','placeSearch','homeView','myLocation','refresh','flightsToggle','quakesToggle','issToggle','satellitesToggle','satelliteGroup','shipsToggle','connectShips','camerasToggle','streetToggle','weather','sourceStatus']) {
     assert.equal(await godseyePage.locator('#' + id).count(), 1, 'GODSEYE control #' + id + ' must exist exactly once');
   }
   assert.match(await godseyePage.locator('.footer').innerText(), /KartaView contributors/);
+  assert.equal(await godseyePage.locator('#satelliteGroup option').count(), 8, 'GODSEYE should expose real CelesTrak orbital catalogues');
+  assert.equal(await godseyePage.locator('#satelliteGroup').inputValue(), 'stations');
   assert.match(await godseyePage.locator('.status').filter({ hasText: 'AISStream requires a free provider key' }).innerText(), /Cloudflare Pages secret/);
   await godseyePage.locator('#shipsToggle').check();
   await godseyePage.locator('#sourceStatus').getByText(/UNAVAILABLE/).waitFor();
