@@ -46,8 +46,13 @@ jobs:
             fi
             sleep 10
           done
-          if [ "$live_ok" -eq 1 ] && curl -fsSL --max-time 20 https://vyralverse.pages.dev/nexus-visual-builder.html -o /tmp/vyralverse-builder.html && grep -q "NEXUS VISUAL BUILDER" /tmp/vyralverse-builder.html; then
-            echo "Cloudflare Pages is serving the organized homepage and Visual Builder."
+          if [ "$live_ok" -eq 1 ] && curl -fsSL --max-time 20 https://vyralverse.pages.dev/nexus-visual-builder.html -o /tmp/vyralverse-builder.html && grep -q "NEXUS VISUAL BUILDER" /tmp/vyralverse-builder.html && curl -fsSL --max-time 20 https://vyralverse.pages.dev/godseye/index.html -o /tmp/vyralverse-godseye.html && grep -q "GODSEYE" /tmp/vyralverse-godseye.html && curl -fsSL --max-time 20 https://vyralverse.pages.dev/godseye/app.js -o /tmp/vyralverse-godseye.js && grep -q "api.kartaview.org/2.0/photo/" /tmp/vyralverse-godseye.js; then
+            adsb_status=$(curl -sS --max-time 20 -o /tmp/vyralverse-adsb-check.json -w '%{http_code}' 'https://vyralverse.pages.dev/api/adsb?lat=999&lon=0')
+            if [ "$adsb_status" = "400" ]; then
+              echo "Cloudflare Pages serves the homepage, Visual Builder, GODSEYE assets and ADS-B function validation."
+            else
+              echo "::warning::GODSEYE assets are live, but ADS-B Pages Function validation returned HTTP $adsb_status."
+            fi
           else
-            echo "::warning::Cloudflare Pages deployment is not yet verified or is still deploying. GitHub source checks remain separate."
+            echo "::warning::Cloudflare Pages GODSEYE deployment is not yet verified or is still deploying. GitHub source checks remain separate."
           fi
