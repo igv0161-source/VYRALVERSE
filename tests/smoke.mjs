@@ -236,6 +236,19 @@ try {
   await page.reload();
   assert.match(await page.locator('#htmlCode').inputValue(), /Hello, <span>creator\.<\/span>/, 'Reset should clear the old saved project');
 
+  // GODSEYE real-world explorer: verify its independent responsive page and every real-data control.
+  const godseyePage = await browser.newPage({ viewport: { width: 390, height: 844 } });
+  await godseyePage.route('https://cesium.com/**', route => route.abort());
+  await godseyePage.goto(`${baseUrl}/godseye/index.html`, { waitUntil: 'domcontentloaded' });
+  assert.match(await godseyePage.title(), /GODSEYE.*Global Explorer/i);
+  for (const id of ['globe','searchForm','placeSearch','homeView','myLocation','refresh','flightsToggle','quakesToggle','issToggle','camerasToggle','streetToggle','weather','sourceStatus']) {
+    assert.equal(await godseyePage.locator('#' + id).count(), 1, 'GODSEYE control #' + id + ' must exist exactly once');
+  }
+  assert.match(await godseyePage.locator('.footer').innerText(), /KartaView contributors/);
+  assert.match(await godseyePage.locator('.disclaimer').innerText(), /No private camera access/);
+  assert.ok(await godseyePage.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'GODSEYE must fit a mobile viewport');
+  await godseyePage.close();
+
   if (pageErrors.length || consoleErrors.length) {
     throw new Error('Browser errors: ' + [...pageErrors, ...consoleErrors].join(' | '));
   }
