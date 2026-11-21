@@ -24,3 +24,21 @@ Do not paste the key into a VYRALVERSE chat, issue, source file, or browser inpu
 - The site reports **CONNECTED** after the WebSocket opens and **LIVE** only after actual vessel position reports arrive.
 - AISStream is a free public API but provides no uptime or delivery SLA. See https://www.aisstream.io/documentation/.
 
+## Recent space-launch layer
+
+The **Recent space launches** layer uses the public Launch Library 2 API through the Cloudflare Pages Function at `/api/launches`.
+
+- No provider key is required for the public endpoint.
+- The function requests the previous 30 days, validates the response, limits its size, and caches successful data at the edge for 15 minutes.
+- Launch markers are placed only when the provider supplies valid launch-pad coordinates.
+- Provider rate limits or outages are reported as unavailable; no launch markers are fabricated.
+- Source: https://ll.thespacedevs.com/ and Launch Library 2.
+
+## Original GOD'S EYE VIEW project
+
+VYRALVERSE's GODSEYE page is an independent integration inspired by, and selectively extending, the original MIT-licensed project. It is not a full port of the upstream Vue application. The original project currently documents a hosted-version waitlist; its official online page says no official hosted instance is available yet.
+
+- Original source and installation instructions: https://github.com/bilawalsidhu/gods-eye-view
+- Official hosted-version information: https://godseyeview.ai/online/
+
+The original MIT license covers its source code, not its third-party datasets, imagery, API services or trademark. This integration does not copy upstream bundled datasets or claim rights to those assets. Always follow the current per-provider terms and attribution.
