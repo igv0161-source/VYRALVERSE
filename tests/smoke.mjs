@@ -92,7 +92,7 @@ try {
   await page.waitForFunction(() => {
     const value = document.querySelector('#signalStatus')?.textContent || '';
     return /CORRECT|NOT QUITE|SERVER CHECK/.test(value);
-  }, { timeout: 10000 });
+  }, null, { timeout: 10000 });
   const puzzleResult = await page.locator('#signalStatus').innerText();
   assert.match(puzzleResult, /CORRECT/, 'Decoded daily anomaly should be accepted; answer=' + decodedSignal + '; status=' + puzzleResult);
 
