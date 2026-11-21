@@ -55,3 +55,12 @@ The **Global tropical cyclones** layer uses the public GDACS GeoJSON feed throug
 - API quick start: https://www.gdacs.org/Documents/2025/GDACS_API_quickstart_v2.pdf
 - GDACS cyclone methodology: https://data.gdacs.org/Knowledge/models_tc.aspx
 
+## Brisbane City Council CCTV locations
+
+The public-camera catalogue now also includes Brisbane City Council's **Traffic Management — Camera locations** dataset via the same-origin Pages Function `/api/brisbane-cameras`.
+
+- The dataset is published by Brisbane City Council under **Creative Commons Attribution 4.0 (CC BY 4.0)** and is updated daily according to its catalogue metadata.
+- The dataset provides camera identifiers, street/suburb information and geographic coordinates. It does **not** provide a public live image/video URL. The app therefore shows a location marker only and does not pretend that footage is available.
+- Official dataset: https://data.brisbane.qld.gov.au/explore/dataset/traffic-cctv-cameras/
+- Council CCTV information and footage-request process: https://www.brisbane.qld.gov.au/transport-and-parking/traffic-management-and-safety/traffic-safety-and-cctv
+
