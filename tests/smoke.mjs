@@ -32,7 +32,10 @@ try {
   await page.locator('#modal.open').waitFor();
   await page.locator('#dismiss').click();
   await page.locator('#enterVerseHero').click();
+  await page.locator('#entryWarp.active').waitFor();
+  await page.locator('#warpSkip').click();
   await page.locator('body.verse-entered').waitFor({ timeout: 5000 });
+  assert.equal(await page.locator('#entryWarp').getAttribute('aria-hidden'), 'true', 'Skip intro must close the gateway overlay accessibly');
 
   // A real portal experience and today's seeded daily puzzle.
   await page.locator('.portal[data-title="Mind Mirror"]').click();
