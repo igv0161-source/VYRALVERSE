@@ -22,6 +22,7 @@ export async function onRequest(context) {
   if (!apiKey) {
     return json({
       status: "not_configured",
+      provider: "AISStream",
       error: "Live vessel tracking is not configured yet. The site owner must add AISSTREAM_API_KEY as a Cloudflare Pages secret."
     }, 503);
   }
