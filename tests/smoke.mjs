@@ -248,7 +248,7 @@ try {
   assert.equal(await godseyePage.locator('#satelliteGroup').inputValue(), 'stations');
   assert.match(await godseyePage.locator('.status').filter({ hasText: 'AISStream requires a free provider key' }).innerText(), /Cloudflare Pages secret/);
   await godseyePage.locator('#shipsToggle').check();
-  await godseyePage.locator('#sourceStatus').getByText(/UNAVAILABLE/).waitFor();
+  await godseyePage.locator('#sourceStatus').getByText(/UNAVAILABLE/).first().waitFor();
   await godseyePage.locator('#launchesToggle').check();
   assert.match(await godseyePage.locator('#launchList').innerText(), /Launch Library 2/);
   await godseyePage.locator('#cyclonesToggle').check();
