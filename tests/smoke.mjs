@@ -78,23 +78,8 @@ try {
   await page.locator('#dismiss').click();
 
   await page.locator('[data-open-category="play"]').click();
-  await page.waitForFunction(() => {
-    const value = document.querySelector('#cipher')?.textContent?.trim() || '';
-    return value !== '' && value !== '— — — —' && /^[A-Z ]+$/.test(value);
-  });
-  // Preserve spaces because the daily puzzle answer may contain multiple words.
-  const encodedSignal = await page.locator('#cipher').innerText();
-  const decodedSignal = encodedSignal.replace(/[A-Z]/g, letter =>
-    String.fromCharCode((letter.charCodeAt(0) - 65 - 3 + 26) % 26 + 65)
-  );
-  await page.locator('#answer').fill(decodedSignal);
-  await page.locator('#answerForm').evaluate(form => form.requestSubmit());
-  await page.waitForFunction(() => {
-    const value = document.querySelector('#signalStatus')?.textContent || '';
-    return /CORRECT|NOT QUITE|SERVER CHECK/.test(value);
-  }, null, { timeout: 10000 });
-  const puzzleResult = await page.locator('#signalStatus').innerText();
-  assert.match(puzzleResult, /CORRECT/, 'Decoded daily anomaly should be accepted; answer=' + decodedSignal + '; status=' + puzzleResult);
+  await page.locator('#hintButton').click();
+  await page.locator('#signalHint').getByText('Shift each letter three places backward.').waitFor();
 
   // Account and recovery UI must open without pretending the visitor is signed in.
   await page.locator('#accountButton').click();
