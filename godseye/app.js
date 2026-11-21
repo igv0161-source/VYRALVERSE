@@ -10,8 +10,8 @@ function setSource(name,state,detail){sourceState[name]={state:state,detail:deta
 function renderSources(){var host=$("sourceStatus");host.innerHTML="";Object.keys(sourceState).forEach(function(name){var item=sourceState[name],row=document.createElement("div"),label=document.createElement("span"),value=document.createElement("b");row.className="statusline";label.textContent=name;value.textContent=item.state+" · "+item.at;value.className=item.state==="LIVE"||item.state==="AVAILABLE"?"ok":item.state==="UNAVAILABLE"?"bad":"warn";row.append(label,value);if(item.detail){row.title=item.detail}host.appendChild(row)})}
 async function getJson(url,timeout){var controller=new AbortController(),timer=setTimeout(function(){controller.abort()},timeout||15000);try{var response=await fetch(url,{signal:controller.signal,headers:{Accept:"application/json"}});if(!response.ok)throw new Error("HTTP "+response.status);return await response.json()}finally{clearTimeout(timer)}}
 function safeUrl(value){try{var u=new URL(value);return u.protocol==="https:"?u.href:null}catch(e){return null}}
-function clearEntities(list){list.forEach(function(entity){viewer.entities.remove(entity)});list.length=0}
-function clearEntityRecords(list){list.forEach(function(item){var entity=item&&item.entity?item.entity:item;if(entity)viewer.entities.remove(entity)});list.length=0}
+function clearEntities(list){if(viewer)list.forEach(function(entity){viewer.entities.remove(entity)});list.length=0}
+function clearEntityRecords(list){if(viewer)list.forEach(function(item){var entity=item&&item.entity?item.entity:item;if(entity)viewer.entities.remove(entity)});list.length=0}
 function fly(lat,lon,height){viewer.camera.flyTo({destination:Cesium.Cartesian3.fromDegrees(lon,lat,height||45000),duration:2.2});}
 function selectedLocation(lat,lon,name){selectedPlace={lat:lat,lon:lon,name:name||"Selected location"};$("weather").textContent="Loading current weather for "+selectedPlace.name+"…";loadWeather(lat,lon,name)}
 function buildViewer(){
