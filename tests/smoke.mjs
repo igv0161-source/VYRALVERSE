@@ -240,7 +240,7 @@ try {
   await godseyePage.route('https://cesium.com/**', route => route.abort());
   await godseyePage.goto(`${baseUrl}/godseye/index.html`, { waitUntil: 'domcontentloaded' });
   assert.match(await godseyePage.title(), /GODSEYE.*Global Explorer/i);
-  for (const id of ['globe','searchForm','placeSearch','homeView','myLocation','refresh','flightsToggle','quakesToggle','issToggle','satellitesToggle','satelliteGroup','shipsToggle','connectShips','camerasToggle','streetToggle','weather','sourceStatus']) {
+  for (const id of ['globe','searchForm','placeSearch','homeView','myLocation','refresh','flightsToggle','quakesToggle','issToggle','satellitesToggle','satelliteGroup','shipsToggle','connectShips','launchesToggle','camerasToggle','streetToggle','weather','sourceStatus']) {
     assert.equal(await godseyePage.locator('#' + id).count(), 1, 'GODSEYE control #' + id + ' must exist exactly once');
   }
   assert.match(await godseyePage.locator('.footer').innerText(), /KartaView contributors/);
