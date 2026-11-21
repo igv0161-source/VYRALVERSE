@@ -78,7 +78,11 @@ try {
   await page.locator('#dismiss').click();
 
   await page.locator('[data-open-category="play"]').click();
-  await page.locator('#answer').fill('ORBIT');
+  const encodedSignal = (await page.locator('#cipher').innerText()).replace(/\\s+/g, '');
+  const decodedSignal = encodedSignal.replace(/[A-Z]/g, letter =>
+    String.fromCharCode((letter.charCodeAt(0) - 65 - 3 + 26) % 26 + 65)
+  );
+  await page.locator('#answer').fill(decodedSignal);
   await page.locator('#answerForm button').click();
   await page.locator('#signalStatus').getByText('CORRECT').waitFor();
 
