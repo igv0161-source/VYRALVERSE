@@ -240,7 +240,7 @@ try {
   await godseyePage.route('https://cesium.com/**', route => route.abort());
   await godseyePage.goto(`${baseUrl}/godseye/index.html`, { waitUntil: 'domcontentloaded' });
   assert.match(await godseyePage.title(), /GODSEYE.*Global Explorer/i);
-  for (const id of ['globe','searchForm','placeSearch','homeView','myLocation','refresh','flightsToggle','quakesToggle','issToggle','satellitesToggle','satelliteGroup','shipsToggle','connectShips','launchesToggle','launchList','camerasToggle','streetToggle','weather','sourceStatus']) {
+  for (const id of ['globe','searchForm','placeSearch','homeView','myLocation','refresh','flightsToggle','quakesToggle','issToggle','satellitesToggle','satelliteGroup','shipsToggle','connectShips','launchesToggle','launchList','cyclonesToggle','cycloneList','camerasToggle','streetToggle','weather','sourceStatus']) {
     assert.equal(await godseyePage.locator('#' + id).count(), 1, 'GODSEYE control #' + id + ' must exist exactly once');
   }
   assert.match(await godseyePage.locator('.footer').innerText(), /KartaView contributors/);
@@ -251,6 +251,8 @@ try {
   await godseyePage.locator('#sourceStatus').getByText(/UNAVAILABLE/).waitFor();
   await godseyePage.locator('#launchesToggle').check();
   assert.match(await godseyePage.locator('#launchList').innerText(), /Launch Library 2/);
+  await godseyePage.locator('#cyclonesToggle').check();
+  assert.match(await godseyePage.locator('#cycloneList').innerText(), /GDACS cyclone data cannot be plotted/);
   assert.doesNotMatch(await godseyePage.locator('body').innerText(), /Your AISStream API key/);
   assert.match(await godseyePage.locator('.disclaimer').innerText(), /No private camera access/);
   assert.ok(await godseyePage.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'GODSEYE must fit a mobile viewport');
@@ -259,7 +261,7 @@ try {
   if (pageErrors.length || consoleErrors.length) {
     throw new Error('Browser errors: ' + [...pageErrors, ...consoleErrors].join(' | '));
   }
-  console.log('PASS: clean gated home, six worlds, Mind Mirror, daily puzzle, account/recovery UI, feature navigation, USGS + GDACS + ISS feeds, Open-Meteo lookup, Visual Builder edit/undo/redo/drag/import safety/export/auth gate/mobile layout, Focus Board, Star Catcher restart, sandboxed code preview, JSON import/export and local save.');
+  console.log('PASS: clean gated home, six worlds, Mind Mirror, daily puzzle, account/recovery UI, feature navigation, USGS + GDACS cyclone + ISS feeds, Open-Meteo lookup, Visual Builder edit/undo/redo/drag/import safety/export/auth gate/mobile layout, Focus Board, Star Catcher restart, sandboxed code preview, JSON import/export and local save.');
 } finally {
   await browser.close();
 }
