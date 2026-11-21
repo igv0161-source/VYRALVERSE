@@ -6,7 +6,7 @@ function json(body, status = 200, headers = {}) {
     status,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
-      "Cache-Control": status === 200 ? "public, max-age=600, s-maxage=3600" : "no-store",
+      "Cache-Control": status === 200 ? `public, max-age=600, s-maxage=${TTL_SECONDS}` : "no-store",
       "X-Content-Type-Options": "nosniff",
       ...headers
     }
@@ -74,7 +74,7 @@ export async function onRequest(context) {
     status: 200,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
-      "Cache-Control": "public, max-age=600, s-maxage=3600",
+      "Cache-Control": `public, max-age=600, s-maxage=${TTL_SECONDS}`,
       "X-Data-Cache": "MISS",
       "X-Data-Source": "Launch Library 2"
     }
