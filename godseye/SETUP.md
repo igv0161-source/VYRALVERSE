@@ -64,3 +64,8 @@ The public-camera catalogue now also includes Brisbane City Council's **Traffic 
 - Official dataset: https://data.brisbane.qld.gov.au/explore/dataset/traffic-cctv-cameras/
 - Council CCTV information and footage-request process: https://www.brisbane.qld.gov.au/transport-and-parking/traffic-management-and-safety/traffic-safety-and-cctv
 
+
+
+## DelDOT public live traffic video
+
+GODSEYE now requests the official DelDOT public traffic-camera catalogue through the same-origin Pages Function `/api/deldot-cameras`. The function normalizes only entries with valid coordinates and HTTPS HLS playlist URLs from the DelDOT video host. Red map markers represent this provider. Select a red marker to play the HLS stream in the camera panel using native browser HLS or hls.js. Playback may be unavailable in browsers or networks that block cross-origin media; the official DelDOT map remains the fallback. VYRALVERSE does not record or proxy the video stream. Public availability is not itself a blanket redistribution licence; this integration links to the official DelDOT map and displays the provider attribution. DelDOT describes its traffic-camera service as live video and provides the official interactive map at https://deldot.gov/map/.
