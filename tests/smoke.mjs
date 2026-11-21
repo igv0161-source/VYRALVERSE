@@ -240,10 +240,12 @@ try {
   await godseyePage.route('https://cesium.com/**', route => route.abort());
   await godseyePage.goto(`${baseUrl}/godseye/index.html`, { waitUntil: 'domcontentloaded' });
   assert.match(await godseyePage.title(), /GODSEYE.*Global Explorer/i);
-  for (const id of ['globe','searchForm','placeSearch','homeView','myLocation','refresh','flightsToggle','quakesToggle','issToggle','satellitesToggle','satelliteGroup','shipsToggle','connectShips','launchesToggle','launchList','cyclonesToggle','cycloneList','camerasToggle','streetToggle','weather','sourceStatus']) {
+  for (const id of ['globe','searchForm','placeSearch','homeView','myLocation','refresh','flightsToggle','quakesToggle','issToggle','satellitesToggle','satelliteGroup','shipsToggle','connectShips','launchesToggle','launchList','cyclonesToggle','cycloneList','camerasToggle','streetToggle','cameraVideo','cameraMedia','weather','sourceStatus']) {
     assert.equal(await godseyePage.locator('#' + id).count(), 1, 'GODSEYE control #' + id + ' must exist exactly once');
   }
   assert.match(await godseyePage.locator('.footer').innerText(), /KartaView contributors/);
+  assert.match(await godseyePage.locator('.side').innerText(), /DelDOT live traffic video/);
+  assert.ok(await godseyePage.locator('script[src*="hls.min.js"]').count(), 'HLS playback library must be included');
   assert.equal(await godseyePage.locator('#satelliteGroup option').count(), 8, 'GODSEYE should expose real CelesTrak orbital catalogues');
   assert.equal(await godseyePage.locator('#satelliteGroup').inputValue(), 'stations');
   assert.match(await godseyePage.locator('.status').filter({ hasText: 'AISStream requires a free provider key' }).innerText(), /Cloudflare Pages secret/);
