@@ -241,13 +241,14 @@ try {
   await godseyePage.route('https://cesium.com/**', route => route.abort());
   await godseyePage.goto(`${baseUrl}/godseye/index.html`, { waitUntil: 'domcontentloaded' });
   assert.match(await godseyePage.title(), /GODSEYE.*Global Explorer/i);
-  for (const id of ['globe','searchForm','placeSearch','homeView','myLocation','refresh','flightsToggle','quakesToggle','issToggle','satellitesToggle','shipsToggle','aisKey','connectShips','camerasToggle','streetToggle','weather','sourceStatus']) {
+  for (const id of ['globe','searchForm','placeSearch','homeView','myLocation','refresh','flightsToggle','quakesToggle','issToggle','satellitesToggle','shipsToggle','connectShips','camerasToggle','streetToggle','weather','sourceStatus']) {
     assert.equal(await godseyePage.locator('#' + id).count(), 1, 'GODSEYE control #' + id + ' must exist exactly once');
   }
   assert.match(await godseyePage.locator('.footer').innerText(), /KartaView contributors/);
-  assert.match(await godseyePage.locator('.status').filter({ hasText: 'AISStream requires a free provider key' }).innerText(), /Request a free key/);
+  assert.match(await godseyePage.locator('.status').filter({ hasText: 'AISStream requires a free provider key' }).innerText(), /Cloudflare Pages secret/);
   await godseyePage.locator('#shipsToggle').check();
-  assert.match(await godseyePage.locator('#sourceStatus').innerText(), /NEEDS KEY/);
+  await godseyePage.locator('#sourceStatus').getByText(/UNAVAILABLE/).waitFor();
+  assert.doesNotMatch(await godseyePage.locator('body').innerText(), /Your AISStream API key/);
   assert.match(await godseyePage.locator('.disclaimer').innerText(), /No private camera access/);
   assert.ok(await godseyePage.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'GODSEYE must fit a mobile viewport');
   await godseyePage.close();
