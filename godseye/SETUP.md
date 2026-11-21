@@ -29,7 +29,7 @@ Do not paste the key into a VYRALVERSE chat, issue, source file, or browser inpu
 The **Recent space launches** layer uses the public Launch Library 2 API through the Cloudflare Pages Function at `/api/launches`.
 
 - No provider key is required for the public endpoint.
-- The function requests the previous 30 days, validates the response, limits its size, and caches successful data at the edge for 15 minutes.
+- The function requests the previous 30 days, validates the response, limits its size, and caches successful data at the edge for one hour to stay well below the provider's anonymous rate limit.
 - Launch markers are placed only when the provider supplies valid launch-pad coordinates.
 - Provider rate limits or outages are reported as unavailable; no launch markers are fabricated.
 - Source: https://ll.thespacedevs.com/ and Launch Library 2.
