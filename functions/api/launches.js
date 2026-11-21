@@ -1,4 +1,4 @@
-const TTL_SECONDS = 900;
+const TTL_SECONDS = 3600;
 const MAX_BODY_BYTES = 12 * 1024 * 1024;
 
 function json(body, status = 200, headers = {}) {
@@ -6,7 +6,7 @@ function json(body, status = 200, headers = {}) {
     status,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
-      "Cache-Control": status === 200 ? "public, max-age=300, s-maxage=900" : "no-store",
+      "Cache-Control": status === 200 ? "public, max-age=600, s-maxage=3600" : "no-store",
       "X-Content-Type-Options": "nosniff",
       ...headers
     }
@@ -74,7 +74,7 @@ export async function onRequest(context) {
     status: 200,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
-      "Cache-Control": "public, max-age=300, s-maxage=900",
+      "Cache-Control": "public, max-age=600, s-maxage=3600",
       "X-Data-Cache": "MISS",
       "X-Data-Source": "Launch Library 2"
     }
