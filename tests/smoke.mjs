@@ -78,13 +78,23 @@ try {
   await page.locator('#dismiss').click();
 
   await page.locator('[data-open-category="play"]').click();
-  const encodedSignal = (await page.locator('#cipher').innerText()).replace(/\\s+/g, '');
+  await page.waitForFunction(() => {
+    const value = document.querySelector('#cipher')?.textContent?.trim() || '';
+    return value !== '' && value !== '— — — —' && /^[A-Z ]+$/.test(value);
+  });
+  const encodedSignal = (await page.locator('#cipher').innerText()).trim().replace(/\\s+/g, '');
   const decodedSignal = encodedSignal.replace(/[A-Z]/g, letter =>
     String.fromCharCode((letter.charCodeAt(0) - 65 - 3 + 26) % 26 + 65)
   );
+  assert.ok(decodedSignal.length >= 3, 'Daily anomaly cipher should contain a real puzzle word');
   await page.locator('#answer').fill(decodedSignal);
-  await page.locator('#answerForm button').click();
-  await page.locator('#signalStatus').getByText('CORRECT').waitFor();
+  await page.locator('#answerForm').evaluate(form => form.requestSubmit());
+  await page.waitForFunction(() => {
+    const value = document.querySelector('#signalStatus')?.textContent || '';
+    return /CORRECT|NOT QUITE|SERVER CHECK/.test(value);
+  }, { timeout: 10000 });
+  const puzzleResult = await page.locator('#signalStatus').innerText();
+  assert.match(puzzleResult, /CORRECT/, 'Decoded daily anomaly should be accepted; answer=' + decodedSignal + '; status=' + puzzleResult);
 
   // Account and recovery UI must open without pretending the visitor is signed in.
   await page.locator('#accountButton').click();
