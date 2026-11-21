@@ -80,7 +80,7 @@ try {
   await page.locator('[data-open-category="play"]').click();
   await page.locator('#answer').fill('ORBIT');
   await page.locator('#answerForm button').click();
-  await page.locator('#signalStatus').getByText('SIGNAL DECODED').waitFor();
+  await page.locator('#signalStatus').getByText('CORRECT').waitFor();
 
   // Account and recovery UI must open without pretending the visitor is signed in.
   await page.locator('#accountButton').click();
