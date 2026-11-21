@@ -45,7 +45,8 @@ async function refreshEnabled(){var tasks=[];if($("quakesToggle").checked)tasks.
 $("quakesToggle").addEventListener("change",function(){if(this.checked)loadQuakes();else clearEntities(quakes)});
 $("flightsToggle").addEventListener("change",function(){if(this.checked)loadFlights();else clearEntities(aircraft)});
 $("issToggle").addEventListener("change",function(){if(this.checked)loadISS();else if(issEntity){viewer.entities.remove(issEntity);issEntity=null}});
-$("camerasToggle").addEventListener("change",function(){if(this.checked)loadCameras();else{clearEntities(cameras);$("cameraCard").style.display="none";$("cameraEmpty").style.display="block"}});\n$("streetToggle").addEventListener("change",function(){if(this.checked)loadStreetPhotos();else clearEntities(streetPhotos)});
+$("camerasToggle").addEventListener("change",function(){if(this.checked)loadCameras();else{clearEntities(cameras);$("cameraCard").style.display="none";$("cameraEmpty").style.display="block"}});
+$("streetToggle").addEventListener("change",function(){if(this.checked)loadStreetPhotos();else clearEntities(streetPhotos)});
 buildViewer();
 if(viewer){loadQuakes();loadISS();setInterval(function(){if($("issToggle").checked)loadISS()},15000);setInterval(function(){if($("quakesToggle").checked)loadQuakes()},300000);setInterval(function(){if($("flightsToggle").checked)loadFlights()},90000)}
 })();
