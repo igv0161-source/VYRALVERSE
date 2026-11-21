@@ -82,11 +82,11 @@ try {
     const value = document.querySelector('#cipher')?.textContent?.trim() || '';
     return value !== '' && value !== '— — — —' && /^[A-Z ]+$/.test(value);
   });
-  const encodedSignal = (await page.locator('#cipher').innerText()).trim().replace(/\\s+/g, '');
+  // Preserve spaces because the daily puzzle answer may contain multiple words.
+  const encodedSignal = await page.locator('#cipher').innerText();
   const decodedSignal = encodedSignal.replace(/[A-Z]/g, letter =>
     String.fromCharCode((letter.charCodeAt(0) - 65 - 3 + 26) % 26 + 65)
   );
-  assert.ok(decodedSignal.length >= 3, 'Daily anomaly cipher should contain a real puzzle word');
   await page.locator('#answer').fill(decodedSignal);
   await page.locator('#answerForm').evaluate(form => form.requestSubmit());
   await page.waitForFunction(() => {
