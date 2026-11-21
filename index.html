@@ -147,7 +147,7 @@ body.verse-entered .corner,body.verse-entered .bottomhud{display:flex}
 .warp-ring{position:absolute;width:min(75vw,560px);aspect-ratio:1;border:1px solid #9df5ff99;border-radius:50%;box-shadow:0 0 30px #70eaff25,inset 0 0 35px #70eaff16;opacity:0}.ring-one{transform:scale(.08) rotateX(65deg)}.ring-two{width:min(105vw,780px);border-color:#b7a1ff77;transform:scale(.08) rotateY(68deg)}.ring-three{width:min(130vw,980px);border-color:#e9d29b55;transform:scale(.08) rotateX(75deg)}
 .entry-warp.active .ring-one{animation:ringExpand 1.55s cubic-bezier(.12,.7,.2,1) forwards}.entry-warp.active .ring-two{animation:ringExpand 1.75s .08s cubic-bezier(.12,.7,.2,1) forwards}.entry-warp.active .ring-three{animation:ringExpand 1.95s .16s cubic-bezier(.12,.7,.2,1) forwards}
 .warp-core{z-index:2;display:flex;flex-direction:column;align-items:center;gap:13px;text-align:center;opacity:0;transform:scale(.65);text-shadow:0 0 22px #8df2ff80}.warp-core span{font:10px 'DM Mono';letter-spacing:.55em;color:#9df5ff}.warp-core b{font-size:clamp(25px,6vw,56px);letter-spacing:-.06em;color:white}.warp-core small{font:9px 'DM Mono';letter-spacing:.24em;color:#b7a1ff}.entry-warp.active .warp-core{animation:coreReveal 1.55s .15s ease forwards}
-.warp-flash{position:absolute;inset:0;background:#eaffff;opacity:0}.entry-warp.active .warp-flash{animation:warpFlash 1.65s ease-out forwards}
+.warp-flash{position:absolute;inset:0;background:#eaffff;opacity:0}.entry-warp.active .warp-flash{animation:warpFlash 1.65s ease-out forwards}.warp-skip{position:absolute;z-index:4;right:max(22px,5vw);bottom:max(22px,5vh);pointer-events:auto;padding:12px 15px;border:1px solid #9df5ff66;border-radius:3px;background:#07101cbb;color:#dffaff;font:9px "DM Mono";letter-spacing:.16em;cursor:pointer;opacity:0;transition:opacity .25s,background .25s,border-color .25s}.entry-warp.active .warp-skip{opacity:1;animation:skipReveal .4s .25s both}.warp-skip span{margin-left:12px;color:#e8cb91}.warp-skip:hover,.warp-skip:focus-visible{background:#123047;border-color:#9df5ff;outline:2px solid #9df5ff55;outline-offset:3px}@keyframes skipReveal{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}@media(prefers-reduced-motion:reduce){.warp-skip{animation:none!important;opacity:1!important}}
 body.gateway-crossing #universe{filter:brightness(1.8) saturate(1.4);transform:scale(1.035);transition:filter .5s,transform 1.4s}body.gateway-crossing .hero-copy{filter:blur(5px);transform:scale(.96);opacity:0;transition:all .45s}
 #enterVerseHero{position:relative;isolation:isolate;overflow:hidden}#enterVerseHero:before{content:"";position:absolute;inset:-80% -30%;z-index:-1;background:linear-gradient(110deg,transparent 35%,#ffffffb8 50%,transparent 65%);transform:translateX(-100%) rotate(12deg)}#enterVerseHero:hover:before{animation:buttonSweep .8s ease}#enterVerseHero:after{content:"";position:absolute;inset:-8px;border:1px solid #a8f5ff70;opacity:0;transform:scale(.92);pointer-events:none}#enterVerseHero:hover:after{animation:buttonPulse 1.2s ease-out infinite}
 #enterVerse,#enterVerseHero{transition:transform .25s,box-shadow .25s,filter .25s}#enterVerse:active,#enterVerseHero:active{transform:scale(.96)}
@@ -301,7 +301,7 @@ header{background:#03050b70;border-bottom-color:#b8eaff1c}
 </style>
 </head>
 <body class="verse-locked">
-<div id="fallback" aria-hidden="true"></div><canvas id="universe" aria-label="A cinematic interactive 3D universe"></canvas><div class="vignette"></div><div class="entry-warp" id="entryWarp" aria-hidden="true"><div class="warp-grid"></div><div class="warp-ring ring-one"></div><div class="warp-ring ring-two"></div><div class="warp-ring ring-three"></div><div class="warp-core"><span>VYRALVERSE</span><b>GATEWAY OPEN</b><small>REALITY IS RECONFIGURING</small></div><div class="warp-flash"></div></div>
+<div id="fallback" aria-hidden="true"></div><canvas id="universe" aria-label="A cinematic interactive 3D universe"></canvas><div class="vignette"></div><div class="entry-warp" id="entryWarp" aria-hidden="true"><div class="warp-grid"></div><div class="warp-ring ring-one"></div><div class="warp-ring ring-two"></div><div class="warp-ring ring-three"></div><div class="warp-core"><span>VYRALVERSE</span><b>GATEWAY OPEN</b><small>REALITY IS RECONFIGURING</small></div><div class="warp-flash"></div><button class="warp-skip" id="warpSkip" type="button" aria-label="Skip the VYRALVERSE intro">SKIP INTRO <span>↗</span></button></div>
 <header><div class="logo">VYRAL<b>VERSE</b></div><div class="navmeta">THE INTERNET'S PLAYGROUND&nbsp; / &nbsp;001</div><button class="navbutton" id="enterVerse" type="button" aria-label="Enter the VYRALVERSE universe"><span class="gate-label">ENTER THE UNIVERSE</span><span class="gate-arrow" aria-hidden="true">↗</span></button><button class="navbutton" id="accountButton" type="button">SIGN IN ↗</button></header>
 <main>
 <section class="hero" id="top"><div class="hero-rift" aria-hidden="true"><div class="rift-core"></div><div class="rift-orbit"><i class="rift-node n1"></i><i class="rift-node n2"></i></div><div class="rift-orbit orbit-two"></div><div class="rift-orbit orbit-three"><i class="rift-node n3"></i></div><div class="rift-label">RIFT SIGNAL // 001</div></div><div class="hero-copy"><div class="eyebrow">✦ &nbsp; THE INTERNET’S PLAYGROUND</div><h1>ENTER THE<br><span>UNKNOWN.</span></h1><p>A universe of hidden worlds, strange challenges and unexpected discoveries is waiting beyond this gate.</p><div class="actions"><button class="btn btn-primary" id="enterVerseHero" type="button" aria-label="Enter the VYRALVERSE universe"><span class="gate-label">ENTER THE UNIVERSE</span><span class="gate-arrow" aria-hidden="true">↗</span></button><button class="btn btn-ghost" id="surprise" type="button">SURPRISE ME ✧</button></div><div class="gesture" id="gateStatus" aria-live="polite"><span>✧</span> GATE SEALED · AWAITING YOUR SIGNAL</div></div></section>
@@ -683,25 +683,28 @@ render();
 })();</script><script>
 (()=> {
  const enterButtons=[document.getElementById('enterVerse'),document.getElementById('enterVerseHero')].filter(Boolean);
- const warp=document.getElementById('entryWarp');let entered=false;
+ const warp=document.getElementById('entryWarp'),skip=document.getElementById('warpSkip');let entered=false,revealTimer=0;
  function enterUniverse(){
    if(entered)return;entered=true;
    enterButtons.forEach(b=>{b.disabled=true;b.setAttribute('aria-busy','true')});
    const gateStatus=document.getElementById('gateStatus');if(gateStatus)gateStatus.innerHTML='<span>✧</span> SIGNAL ACCEPTED · OPENING THE RIFT';
    document.body.classList.add('gateway-crossing');
    if(warp){warp.classList.add('active');warp.setAttribute('aria-hidden','false')}
-   if(navigator.vibrate)navigator.vibrate([18,35,42]);
    const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+   if(!reduced&&navigator.vibrate)navigator.vibrate([18,35,42]);
    const reveal=()=>{
+     if(!entered)return;window.clearTimeout(revealTimer);revealTimer=0;
      document.body.classList.remove('verse-locked','gateway-crossing');document.body.classList.add('verse-entered');
      try{sessionStorage.setItem('vv-universe-entered','1')}catch(e){}
      const hub=document.getElementById('portals');if(hub)hub.scrollIntoView({behavior:reduced?'auto':'smooth',block:'start'});
      if(warp){warp.classList.remove('active');warp.setAttribute('aria-hidden','true')}
      enterButtons.forEach(b=>{b.disabled=false;b.removeAttribute('aria-busy')});
    };
-   window.setTimeout(reveal,reduced?80:2100);
+   if(skip)skip.onclick=reveal;
+   revealTimer=window.setTimeout(reveal,reduced?80:2300);
  }
  enterButtons.forEach(b=>b.addEventListener('click',enterUniverse));
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&entered&&warp?.classList.contains('active')){e.preventDefault();skip?.click()}});
 })();
 </script>
 <script type="module">
