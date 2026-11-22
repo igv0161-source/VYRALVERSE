@@ -101,7 +101,6 @@ try {
   assert.notEqual(await page.locator('#verseCode').innerText(), firstVerseCode, 'Each new Verse ID attempt should receive a fresh random identity tag');
   assert.match(await page.locator('#signalHint').innerText(), /Shift each letter three places backward/);
   assert.doesNotMatch(await page.locator('.signal-top').innerText(), /LIVE SIGNAL/i, 'A generated daily puzzle must not be labelled as a live data feed');
-  assert.match(await page.locator('#leaderboard .leaderboard-head').innerText(), /CLOUD RANKINGS/i);
 
   // Account and recovery UI must open without pretending the visitor is signed in.
   await page.locator('#accountButton').click();
@@ -114,6 +113,7 @@ try {
   // Navigation must open the correct collapsed feature group.
   await page.locator('[data-open-category="connect"]').click();
   assert.equal(await page.locator('#connect').evaluate(el => el.open), true);
+  assert.match(await page.locator('#leaderboard .leaderboard-head').innerText(), /CLOUD RANKINGS/i);
   for (const target of ['top', 'portals', 'play', 'create', 'connect', 'discover']) {
     await page.locator('.vv-tab[data-target="' + target + '"]').click();
     if (['play', 'connect', 'discover'].includes(target)) {
