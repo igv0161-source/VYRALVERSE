@@ -11,14 +11,17 @@ Source: https://github.com/igv0161-source/VYRALVERSE
 - NEXUS VISUAL BUILDER: drag-and-drop page sections, editable content and styling, desktop/tablet/mobile preview, undo/redo, standalone HTML export and portable JSON projects.
 - Command deck navigation opens collapsed feature groups before jumping to a destination.
 - Supabase Auth-backed private cloud project storage for Visual Builder projects.
-- Existing explorer identity, XP, daily anomaly, leaderboard, invite-only rooms, friend quests and realtime community features remain in the main experience.
-- GODSEYE uses live USGS earthquake records, GDACS global disaster alerts, ISS telemetry and Open-Meteo city weather. NASA EONET was returning HTTP 500 during verification, so the working GDACS public feed replaced it.
+- Explorer progress is local for guests and server-authoritative for signed-in accounts; cloud XP, levels and discovery totals are read from Supabase.
+- Friend Quests are tracked in Supabase: authenticated creators receive a share link, friends sign in to submit one completion, and the creator can read responses in a realtime inbox. Quest links expire after 30 days.
+- Daily Anomaly is a UTC-reset daily Caesar-cipher puzzle. Signed-in reward claims are checked server-side and duplicate daily XP is not awarded.
+- Invite-only rooms, room presence, shared pulse broadcasts, public community messages and creation posts use Supabase Auth, database policies and Realtime.
+- GODSEYE uses public USGS earthquake records, GDACS disaster alerts, provider-calculated ISS position estimates, CelesTrak TLE-derived satellite estimates, ADS-B aircraft reports, optional AISStream vessel reports, Launch Library 2 launches, and Open-Meteo modelled weather. Camera coverage is limited: TfL/Tallinn snapshots, Brisbane camera locations only, and a DelDOT HLS catalogue that is currently returning HTTP 502; DelDOT playback is not verified. NASA EONET was returning HTTP 500 during verification, so GDACS replaced it.
 
 ## Frontend
 The site is currently a lightweight static HTML/CSS/JavaScript project served by Cloudflare Pages. The Supabase publishable key is intentionally used in browser code; it is designed for public clients and is protected by database Row Level Security. Never put a Supabase secret or service-role key in this repository.
 
 ## Automated checks
-A GitHub Actions Playwright smoke test runs on pushes and pull requests. It checks all six worlds, the daily puzzle, account/recovery UI, feature and dock navigation, guest-safe community controls, live USGS/GDACS/ISS feeds, Open-Meteo weather, Visual Builder editing/undo/redo/drag/drop/import safety/export/local restore/auth gate/mobile layout, and Code Studio mini-app/game, preview-storage persistence across preview and workspace reloads, sandboxed pop-out preview, JSON import/export, local restore and reset. The same suite was also run successfully against the live Cloudflare Pages site using `BASE_URL=https://vyralverse.pages.dev`. Authenticated account, private cloud saves and realtime room end-to-end tests still require a dedicated test account and are not included in the anonymous browser smoke run.
+A GitHub Actions Playwright smoke test runs on pushes and pull requests. It checks all six worlds, the daily puzzle, account/recovery UI, feature and dock navigation, guest-safe community controls, live USGS/GDACS/ISS feeds, Open-Meteo weather, Visual Builder editing/undo/redo/drag/drop/import safety/export/local restore/auth gate/mobile layout, and Code Studio mini-app/game, preview-storage persistence across preview and workspace reloads, sandboxed pop-out preview, JSON import/export, local restore and reset. A separate workflow step checks the deployed Cloudflare Pages assets and selected API method/response contracts. The anonymous browser smoke suite does not sign in or prove authenticated account, private cloud save, friend-quest completion, or realtime-room end-to-end behavior; those require a dedicated test account.
 
 ## Backend
 Supabase project: `lrkntokhyyufgtwoeisw` (Asia Pacific — Mumbai).
@@ -29,6 +32,7 @@ The NEXUS Visual Builder uses `public.studio_projects`:
 - Project JSON is limited to 512 KiB per row.
 - The `anon` role has no table privileges; authenticated users receive CRUD grants, still constrained by the four owner-only RLS policies.
 - The schema source is in [backend/studio_projects.sql](backend/studio_projects.sql).
+- `quest_completions` is included in the `supabase_realtime` publication so quest creators can receive new completion events. The one-time publication change is recorded in [backend/quest_realtime.sql](backend/quest_realtime.sql).
 
 ## Local development
 Open `index.html` through a local static web server. The browser pages use ES modules and Supabase's browser ESM build, so opening files directly with `file://` may block module loading. No Node build step is currently required for the static site.
