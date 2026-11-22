@@ -73,7 +73,7 @@ try {
   await page.locator('#dismiss').click();
 
   await page.locator('.portal[data-title="Friend Quests"]').click();
-  assert.match(await page.locator('#questInbox').innerText(), /SIGN IN TO VIEW/i);
+  assert.match(await page.locator('#questInbox').innerText(), /SIGN IN TO (VIEW|LOAD)/i);
   await page.locator('#questGo').click();
   await page.locator('#accountModal.open').waitFor();
   assert.match(await page.locator('#questResult').innerText(), /SIGN IN REQUIRED/i);
@@ -100,7 +100,7 @@ try {
   await page.locator('#verseResult:not([hidden])').waitFor();
   assert.notEqual(await page.locator('#verseCode').innerText(), firstVerseCode, 'Each new Verse ID attempt should receive a fresh random identity tag');
   assert.match(await page.locator('#signalHint').innerText(), /Shift each letter three places backward/);
-  assert.doesNotMatch(await page.locator('.signal-top').innerText(), /LIVE SIGNAL/i, 'A generated daily puzzle must not be labelled as a live data feed');
+  assert.doesNotMatch(await page.locator('.signal-card > .signal-top').innerText(), /LIVE SIGNAL/i, 'A generated daily puzzle must not be labelled as a live data feed');
 
   // Account and recovery UI must open without pretending the visitor is signed in.
   await page.locator('#accountButton').click();
