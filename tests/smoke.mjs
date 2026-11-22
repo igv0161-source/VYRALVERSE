@@ -266,7 +266,7 @@ try {
     assert.equal(await godseyePage.locator('#' + id).count(), 1, 'GODSEYE control #' + id + ' must exist exactly once');
   }
   assert.match(await godseyePage.locator('.footer').innerText(), /KartaView contributors/);
-  assert.match(await godseyePage.locator('.side').innerText(), /DelDOT live traffic video/);
+  assert.match(await godseyePage.locator('.side').innerText(), /DelDOT HLS video catalogue/);
   assert.ok(await godseyePage.locator('script[src*="hls.min.js"]').count(), 'HLS playback library must be included');
   assert.equal(await godseyePage.locator('#satelliteGroup option').count(), 8, 'GODSEYE should expose real CelesTrak orbital catalogues');
   assert.equal(await godseyePage.locator('#satelliteGroup').inputValue(), 'stations');
