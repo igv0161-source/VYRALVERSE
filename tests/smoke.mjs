@@ -73,8 +73,11 @@ try {
   await page.locator('#dismiss').click();
 
   await page.locator('.portal[data-title="Friend Quests"]').click();
+  assert.match(await page.locator('#questInbox').innerText(), /SIGN IN TO VIEW/i);
   await page.locator('#questGo').click();
-  await page.locator('#questResult button').getByText('SHARE QUEST').waitFor();
+  await page.locator('#accountModal.open').waitFor();
+  assert.match(await page.locator('#questResult').innerText(), /SIGN IN REQUIRED/i);
+  await page.locator('#accountClose').click();
   await page.locator('#dismiss').click();
 
   await page.locator('[data-open-category="play"]').click();
@@ -90,8 +93,15 @@ try {
   assert.match(await page.locator('#verseCode').innerText(), /^VV-/);
   await page.locator('#verseName').fill('Smoke Tester');
   assert.equal(await page.locator('#verseDownload').count(), 1, 'Verse ID must offer a downloadable identity card');
+  const firstVerseCode = await page.locator('#verseCode').innerText();
   await page.locator('#verseAgain').click();
   assert.equal(await page.locator('#verseQuestionWrap').isVisible(), true, 'Verse ID quiz must be replayable');
+  for (let i = 0; i < 4; i++) await page.locator('#verseOptions button').first().click();
+  await page.locator('#verseResult:not([hidden])').waitFor();
+  assert.notEqual(await page.locator('#verseCode').innerText(), firstVerseCode, 'Each new Verse ID attempt should receive a fresh random identity tag');
+  assert.match(await page.locator('#signalHint').innerText(), /Shift each letter three places backward/);
+  assert.doesNotMatch(await page.locator('.signal-top').innerText(), /LIVE SIGNAL/i, 'A generated daily puzzle must not be labelled as a live data feed');
+  assert.match(await page.locator('#leaderboard .leaderboard-head').innerText(), /CLOUD RANKINGS/i);
 
   // Account and recovery UI must open without pretending the visitor is signed in.
   await page.locator('#accountButton').click();
@@ -275,7 +285,7 @@ try {
   if (pageErrors.length || consoleErrors.length) {
     throw new Error('Browser errors: ' + [...pageErrors, ...consoleErrors].join(' | '));
   }
-  console.log('PASS: clean gated home, six worlds, Mind Mirror, daily puzzle, account/recovery UI, feature navigation, USGS + GDACS cyclone + ISS feeds, Open-Meteo lookup, Visual Builder edit/undo/redo/drag/import safety/export/auth gate/mobile layout, Focus Board, Star Catcher restart, sandboxed code preview, JSON import/export and local save.');
+  console.log('PASS: clean gated home, six worlds, Mind Mirror, tracked Friend Quest sign-in gate, daily puzzle, account/recovery UI, feature navigation, USGS + GDACS cyclone + ISS feeds, Open-Meteo lookup, Visual Builder edit/undo/redo/drag/import safety/export/auth gate/mobile layout, Focus Board, Star Catcher restart, sandboxed code preview, JSON import/export and local save.');
 } finally {
   await browser.close();
 }
