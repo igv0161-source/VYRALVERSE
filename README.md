@@ -15,6 +15,7 @@ Source: https://github.com/igv0161-source/VYRALVERSE
 - Friend Quests are tracked in Supabase: authenticated creators receive a share link, friends sign in to submit one completion, and the creator can read responses in a realtime inbox. Quest links expire after 30 days.
 - Daily Anomaly is a UTC-reset daily Caesar-cipher puzzle. Signed-in reward claims are checked server-side and duplicate daily XP is not awarded.
 - Invite-only rooms, room presence, shared pulse broadcasts, public community messages and creation posts use Supabase Auth, database policies and Realtime.
+- The Common Room is a Discord-inspired community server with five persistent text channels, live signed-in presence, threaded replies and six per-user emoji reactions. Channel messages and reactions are stored in Supabase with RLS; anonymous visitors can read, while posting and reacting require sign-in. This is an in-site community experience, not a Discord account/OAuth integration.
 - GODSEYE uses public USGS earthquake records, GDACS disaster alerts, provider-calculated ISS position estimates, CelesTrak TLE-derived satellite estimates, ADS-B aircraft reports, optional AISStream vessel reports, Launch Library 2 launches, and Open-Meteo modelled weather. Camera coverage is limited: TfL/Tallinn snapshots, Brisbane camera locations only, and a DelDOT HLS catalogue that is currently returning HTTP 502; DelDOT playback is not verified. NASA EONET was returning HTTP 500 during verification, so GDACS replaced it.
 
 ## Frontend
@@ -32,7 +33,8 @@ The NEXUS Visual Builder uses `public.studio_projects`:
 - Project JSON is limited to 512 KiB per row.
 - The `anon` role has no table privileges; authenticated users receive CRUD grants, still constrained by the four owner-only RLS policies.
 - The schema source is in [backend/studio_projects.sql](backend/studio_projects.sql).
-- `quest_completions` is included in the `supabase_realtime` publication so quest creators can receive new completion events. The one-time publication change is recorded in [backend/quest_realtime.sql](backend/quest_realtime.sql).
+- `quest_completions` is included in the `supabase_realtime` publication so quest creators can receive new completion events.
+- The Discord-inspired community hub schema is in [backend/discord_community_hub.sql](backend/discord_community_hub.sql); it adds message channels, reply links, and a reaction table with public-read / authenticated-own-write RLS, plus Realtime publication. The one-time publication change is recorded in [backend/quest_realtime.sql](backend/quest_realtime.sql).
 
 ## Local development
 Open `index.html` through a local static web server. The browser pages use ES modules and Supabase's browser ESM build, so opening files directly with `file://` may block module loading. No Node build step is currently required for the static site.
