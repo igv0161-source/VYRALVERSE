@@ -42,7 +42,7 @@ jobs:
           live_ok=0
           for i in {1..6}; do
             if curl -fsSL --max-time 20 https://vyralverse.pages.dev/ -o /tmp/vyralverse-live.html; then
-              if grep -q "DISCOVER YOUR VERSE ID" /tmp/vyralverse-live.html && grep -q "YOUR SIGNAL. YOUR STORY." /tmp/vyralverse-live.html; then live_ok=1; break; fi
+              if grep -q "DISCOVER YOUR VERSE ID" /tmp/vyralverse-live.html && grep -q "YOUR SIGNAL. YOUR STORY." /tmp/vyralverse-live.html && grep -q "A REAL CHALLENGE" /tmp/vyralverse-live.html && grep -q "YOUR QUEST INBOX" /tmp/vyralverse-live.html && grep -q "DAILY SIGNAL" /tmp/vyralverse-live.html && grep -q "PUBLIC EARTH SIGNALS" /tmp/vyralverse-live.html; then live_ok=1; break; fi
             fi
             sleep 10
           done
