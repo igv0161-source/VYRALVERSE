@@ -128,6 +128,10 @@ try {
   await page.locator('#communityFeed').getByText('No public creations yet').waitFor({ timeout: 15000 });
   assert.equal(await page.locator('#roomTitle').isDisabled(), true, 'Private rooms must require an authenticated explorer');
   assert.equal(await page.locator('#discussionInput').isDisabled(), true, 'Posting to public chat must require authentication');
+  assert.equal(await page.locator('[data-chat-channel]').count(), 5, 'Community server should expose five persistent text channels');
+  assert.equal(await page.locator('[data-chat-channel="general"]').getAttribute('aria-pressed'), 'true', 'General should be the default community channel');
+  assert.equal(await page.locator('[data-chat-channel="showcase"]').count(), 1, 'Showcase channel should be available');
+  assert.equal(await page.locator('#discussionOnline').count(), 1, 'Community presence status should be visible');
   await page.locator('#commandLauncher').click();
   await page.locator('#commandSearch').fill('GODSEYE');
   await page.locator('.command-item').first().click();
